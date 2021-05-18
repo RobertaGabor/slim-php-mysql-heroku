@@ -12,22 +12,26 @@ use Slim\Routing\RouteContext;
 require __DIR__ . '/../vendor/autoload.php';
 
 require_once './db/AccesoDatos.php';
-// require_once './middlewares/Logger.php';
 
 require_once './controllers/UsuarioController.php';
 
-// Instantiate App
+
 $app = AppFactory::create();
 
-// Add error middleware
+// $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+// $dotenv->safeLoad();
+
 $app->addErrorMiddleware(true, true, true);
 
 
 // Routes
 $app->group('/usuarios', function (RouteCollectorProxy $group) {
-    $group->get('[/]', \UsuarioController::class . ':TraerTodos');
+    $group->get('[/]', \UsuarioController::class . ':TraerTodos'); //AQUI
+    
     $group->get('/{usuario}', \UsuarioController::class . ':TraerUno');
-    $group->post('[/]', \UsuarioController::class . ':CargarUno');
+    
+    $group->post('[/]', \UsuarioController::class . ':CargarUno'); //AQUI
+   
     $group->post('/delete', \UsuarioController::class . ':BorrarUno');
     $group->post('/modificar', \UsuarioController::class . ':ModificarUno');
   });

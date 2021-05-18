@@ -1,42 +1,112 @@
 <?php
 
-class Usuario
+include_once "Sectores.php";
+include_once "./db/AccesoDatos.php";
+class Usuario extends Sector
 {
-    public $id;
-    public $usuario;
-    public $clave;
 
+    private $id;
+    public $nombre;
+    public $apellido;
+    public $tipo; //si ya hay 3 socios en la abse no se puede
+    public $sector;
+
+
+    public  static function constructAux($nombre,$apellido,$tipo)
+	{
+		if(Sector::validarTipo($tipo))
+		{
+            if($tipo=="socio"&&Usuario::validarSocios()==False)
+            {
+                $instance= new self();
+                $instance->apellido=$apellido;
+                $instance->nombre=$nombre;
+                $instance->tipo=$tipo;
+                $instance->sector=Sector::getSector($tipo);
+                return $instance;
+            }
+
+			
+		}
+
+	}
+
+    ///lista uno listar todos Y EN CONTROLLER CREO UNO CON ESTE CONSTR Y HAGO EL ALTA EN BASE DE DATOS
     public function crearUsuario()
     {
+        $ingreso=date("Y-m-d"); 
+
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, clave) VALUES (:usuario, :clave)");
-        $claveHash = password_hash($this->clave, PASSWORD_DEFAULT);
-        $consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
-        $consulta->bindValue(':clave', $claveHash);
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (nombre, apellido, tipo, sector, ingreso) VALUES (:nombre, :apellido, :tipo, :sector, :ingreso)");
+        $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
+        $consulta->bindValue(':apellido', $this->apellido, PDO::PARAM_STR);
+        $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
+        $consulta->bindValue(':sector', $this->sector, PDO::PARAM_STR);
+        $consulta->bindValue(':ingreso', $ingreso, PDO::PARAM_STR);
         $consulta->execute();
 
         return $objAccesoDatos->obtenerUltimoId();
     }
 
+
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave FROM usuarios");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, nombre, apellido, tipo, sector, ingreso FROM usuarios");
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
     }
 
+    public static function validarSocios()
+    {
+        $count=0;
+        $lista=obtenerTodos();
+
+            foreach ($lista as $value) 
+            {
+                if ($value->tipo=="socio")
+                {
+                    $count+=1;
+                    if($count==3)
+                    {
+                        return True;
+                    }
+                }
+            }
+            return False;
+    
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ///MODIFICAR
     public static function obtenerUsuario($usuario)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave FROM usuarios WHERE usuario = :usuario");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, nombre, apellido, tipo, sector, ingreso FROM usuarios WHERE id = :id");
         $consulta->bindValue(':usuario', $usuario, PDO::PARAM_STR);
         $consulta->execute();
 
         return $consulta->fetchObject('Usuario');
     }
-
+    ///MODIFICAR
     public static function modificarUsuario()
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
@@ -46,7 +116,7 @@ class Usuario
         $consulta->bindValue(':id', $this->id, PDO::PARAM_INT);
         $consulta->execute();
     }
-
+///MODIFICAR
     public static function borrarUsuario($usuario)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
