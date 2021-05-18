@@ -1,7 +1,7 @@
 <?php
 abstract class Sector
 {
-    private static $enum = array( "bartender"=>"Barra Tragos", "cervecero"=>"Barra Chopera",
+    private $enum = array( "bartender"=>"Barra Tragos", "cervecero"=>"Barra Chopera",
                             "cocinero"=>"Cocina/Candy bar",
                             "mozo"=>"Sin sector",
                             "socio"=>"Control general total");
