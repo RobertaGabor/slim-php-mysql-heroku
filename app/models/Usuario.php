@@ -16,17 +16,19 @@ class Usuario extends Sector
 	{
 		if(Sector::validarTipo($tipo))
 		{
-            if($tipo=="socio"&&Usuario::validarSocios()==False)
+            if($tipo=="socio")
             {
-                print("entro");
-                $instance= new self();
-                $instance->apellido=$apellido;
-                $instance->nombre=$nombre;
-                $instance->tipo=$tipo;
-                $instance->sector=Sector::getSector($tipo);
-                return $instance;
+                if(Usuario::validarSocios()==True)
+                {
+                    return null;
+                }  
             }
-
+            $instance= new self();
+            $instance->apellido=$apellido;
+            $instance->nombre=$nombre;
+            $instance->tipo=$tipo;
+            $instance->sector=Sector::getSector($tipo);
+            return $instance;
 			
 		}
 
