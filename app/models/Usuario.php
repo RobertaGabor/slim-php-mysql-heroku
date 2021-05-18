@@ -11,7 +11,7 @@ class Usuario extends Sector
     public $tipo; //si ya hay 3 socios en la abse no se puede
     public $sector;
 
-
+ 
     public  static function constructAux($nombre,$apellido,$tipo)
 	{
 		if(Sector::validarTipo($tipo))
