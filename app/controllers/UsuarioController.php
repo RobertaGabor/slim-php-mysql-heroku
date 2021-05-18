@@ -16,7 +16,7 @@ class UsuarioController extends Usuario implements IApiUsable
       // $usr->usuario = $usuario;
       // $usr->clave = $clave;
       $usr=Usuario::constructAux($nombre,$apellido,$tipo);
-      if($user!=null)
+      if($usr!=null)
       {
         $usr->crearUsuario();
 
