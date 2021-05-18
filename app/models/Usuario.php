@@ -18,6 +18,7 @@ class Usuario extends Sector
 		{
             if($tipo=="socio"&&Usuario::validarSocios()==False)
             {
+                print("entro");
                 $instance= new self();
                 $instance->apellido=$apellido;
                 $instance->nombre=$nombre;
