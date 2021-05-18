@@ -1,14 +1,14 @@
 <?php
 abstract class Sector
 {
-    private $enum = array( "bartender"=>"Barra Tragos", "cervecero"=>"Barra Chopera",
+    private static $enum = array( "bartender"=>"Barra Tragos", "cervecero"=>"Barra Chopera",
                             "cocinero"=>"Cocina/Candy bar",
                             "mozo"=>"Sin sector",
                             "socio"=>"Control general total");
 
     protected static function validarTipo($tipo)
     {
-        foreach ($enum as $key => $value) {
+        foreach (Sector::$enum as $key => $value) {
             if($key == $tipo)
             {
                 return true;
