@@ -36,6 +36,12 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
     $group->post('/modificar', \UsuarioController::class . ':ModificarUno');
   });
 
+  $app->group('/productos', function (RouteCollectorProxy $group) {
+    $group->get('[/]', \ProductsController::class . ':TraerTodos'); //AQUI
+        
+    $group->post('[/]', \ProductsController::class . ':CargarUno'); //AQUI
+  });
+
 $app->get('[/]', function (Request $request, Response $response) {    
     $response->getBody()->write("Slim Framework 4 PHP");
     return $response;
