@@ -20,7 +20,7 @@ abstract class Sector
     
 
     protected static function getSector($tipo) {
-        return $enum[$tipo];
+        return Sector::$enum[$tipo];
     }
 }
 
