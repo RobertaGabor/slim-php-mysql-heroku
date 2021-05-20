@@ -10,7 +10,7 @@ class Usuario extends Sector
     public $apellido;
     public $tipo; //si ya hay 3 socios en la abse no se puede
     public $sector;
-    public $psw
+    public $psw;
 
  
     public  static function constructAux($nombre,$apellido,$tipo,$psw)
