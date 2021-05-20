@@ -4,7 +4,8 @@ abstract class Sector
     private static $enum = array( "bartender"=>"Barra Tragos", "cervecero"=>"Barra Chopera",
                             "cocinero"=>"Cocina/Candy bar",
                             "mozo"=>"Sin sector",
-                            "socio"=>"Control general total");
+                            "socio"=>"Control general total",
+                            "cliente"=>"Mesa");
 
     protected static function validarTipo($tipo)
     {

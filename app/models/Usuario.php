@@ -10,9 +10,10 @@ class Usuario extends Sector
     public $apellido;
     public $tipo; //si ya hay 3 socios en la abse no se puede
     public $sector;
+    public $psw
 
  
-    public  static function constructAux($nombre,$apellido,$tipo)
+    public  static function constructAux($nombre,$apellido,$tipo,$psw)
 	{
 		if(Sector::validarTipo($tipo))
 		{
@@ -28,6 +29,7 @@ class Usuario extends Sector
             $instance->nombre=$nombre;
             $instance->tipo=$tipo;
             $instance->sector=Sector::getSector($tipo);
+            $instance->psw=$psw;
             return $instance;
 			
 		}
@@ -38,14 +40,15 @@ class Usuario extends Sector
     public function crearUsuario()
     {
         $ingreso=date("Y-m-d"); 
-
+        $claveHash = password_hash($this->psw, PASSWORD_DEFAULT);
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (nombre, apellido, tipo, sector, ingreso) VALUES (:nombre, :apellido, :tipo, :sector, :ingreso)");
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (nombre, apellido, tipo, sector, ingreso,clave) VALUES (:nombre, :apellido, :tipo, :sector, :ingreso,:clave)");
         $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
         $consulta->bindValue(':apellido', $this->apellido, PDO::PARAM_STR);
         $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
         $consulta->bindValue(':sector', $this->sector, PDO::PARAM_STR);
         $consulta->bindValue(':ingreso', $ingreso, PDO::PARAM_STR);
+        $consulta->bindValue(':clave', $claveHash, PDO::PARAM_STR);
         $consulta->execute();
 
         return $objAccesoDatos->obtenerUltimoId();
@@ -55,7 +58,7 @@ class Usuario extends Sector
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, nombre, apellido, tipo, sector, ingreso FROM usuarios");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, nombre, apellido, tipo, sector, ingreso, clave FROM usuarios");
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
