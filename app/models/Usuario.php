@@ -10,7 +10,7 @@ class Usuario extends Sector
     public $apellido;
     public $tipo; //si ya hay 3 socios en la abse no se puede
     public $sector;
-    public $psw;
+    public $clave;
 
  
     public  static function constructAux($usuario,$apellido,$tipo,$psw)
@@ -59,7 +59,7 @@ class Usuario extends Sector
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, apellido, tipo, sector, ingreso, clave FROM usuarios");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, apellido, tipo, sector, ingreso FROM usuarios");
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
