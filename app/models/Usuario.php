@@ -43,7 +43,7 @@ class Usuario extends Sector
         $claveHash = password_hash($this->psw, PASSWORD_DEFAULT);
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, apellido, tipo, sector, ingreso,clave) VALUES (:usuario, :apellido, :tipo, :sector, :ingreso,:clave)");
-        $consulta->bindValue(':usuario', $this->nombre, PDO::PARAM_STR);
+        $consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
         $consulta->bindValue(':apellido', $this->apellido, PDO::PARAM_STR);
         $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
         $consulta->bindValue(':sector', $this->sector, PDO::PARAM_STR);
