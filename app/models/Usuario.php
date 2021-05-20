@@ -6,14 +6,14 @@ class Usuario extends Sector
 {
 
     private $id;
-    public $nombre;
+    public $usuario;
     public $apellido;
     public $tipo; //si ya hay 3 socios en la abse no se puede
     public $sector;
     public $psw;
 
  
-    public  static function constructAux($nombre,$apellido,$tipo,$psw)
+    public  static function constructAux($usuario,$apellido,$tipo,$psw)
 	{
 		if(Sector::validarTipo($tipo))
 		{
@@ -26,7 +26,7 @@ class Usuario extends Sector
             }
             $instance= new self();
             $instance->apellido=$apellido;
-            $instance->nombre=$nombre;
+            $instance->usuario=$usuario;
             $instance->tipo=$tipo;
             $instance->sector=Sector::getSector($tipo);
             $instance->psw=$psw;
@@ -42,8 +42,8 @@ class Usuario extends Sector
         $ingreso=date("Y-m-d"); 
         $claveHash = password_hash($this->psw, PASSWORD_DEFAULT);
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (nombre, apellido, tipo, sector, ingreso,clave) VALUES (:nombre, :apellido, :tipo, :sector, :ingreso,:clave)");
-        $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, apellido, tipo, sector, ingreso,clave) VALUES (:usuario, :apellido, :tipo, :sector, :ingreso,:clave)");
+        $consulta->bindValue(':usuario', $this->nombre, PDO::PARAM_STR);
         $consulta->bindValue(':apellido', $this->apellido, PDO::PARAM_STR);
         $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
         $consulta->bindValue(':sector', $this->sector, PDO::PARAM_STR);
@@ -58,7 +58,7 @@ class Usuario extends Sector
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, nombre, apellido, tipo, sector, ingreso, clave FROM usuarios");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, apellido, tipo, sector, ingreso, clave FROM usuarios");
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
