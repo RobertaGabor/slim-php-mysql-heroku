@@ -41,7 +41,7 @@ class Usuario extends Sector
     {
         $ingreso=date("Y-m-d"); 
         $claveHash = password_hash($this->psw, PASSWORD_DEFAULT);
-        console.log($claveHash);
+        //console.log($claveHash);
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, apellido, tipo, sector, ingreso,clave) VALUES (:usuario, :apellido, :tipo, :sector, :ingreso,:clave)");
         $consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
