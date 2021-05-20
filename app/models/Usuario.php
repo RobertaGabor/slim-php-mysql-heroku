@@ -29,7 +29,7 @@ class Usuario extends Sector
             $instance->usuario=$usuario;
             $instance->tipo=$tipo;
             $instance->sector=Sector::getSector($tipo);
-            $instance->psw=$psw;
+            $instance->clave=$psw;
             return $instance;
 			
 		}
