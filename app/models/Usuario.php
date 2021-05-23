@@ -43,13 +43,15 @@ class Usuario extends Sector
         $claveHash = password_hash($this->psw, PASSWORD_DEFAULT);
         //console.log($claveHash);
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, apellido, tipo, sector, ingreso,clave) VALUES (:usuario, :apellido, :tipo, :sector, :ingreso,:clave)");
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, apellido, tipo, sector, ingreso,clave,baja,modificado) VALUES (:usuario, :apellido, :tipo, :sector, :ingreso,:clave,:baja,:modificado)");
         $consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
         $consulta->bindValue(':apellido', $this->apellido, PDO::PARAM_STR);
         $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
         $consulta->bindValue(':sector', $this->sector, PDO::PARAM_STR);
         $consulta->bindValue(':ingreso', $ingreso, PDO::PARAM_STR);
         $consulta->bindValue(':clave', $claveHash, PDO::PARAM_STR);
+        $consulta->bindValue(':baja', null, PDO::PARAM_STR);
+        $consulta->bindValue(':modificado', null, PDO::PARAM_STR);
         $consulta->execute();
 
         return $objAccesoDatos->obtenerUltimoId();
@@ -59,7 +61,7 @@ class Usuario extends Sector
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, apellido, tipo, sector, ingreso FROM usuarios");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, apellido, tipo, sector, ingreso,baja, modificado FROM usuarios");
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
@@ -85,52 +87,44 @@ class Usuario extends Sector
     
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    ///MODIFICAR
     public static function obtenerUsuario($usuario)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, nombre, apellido, tipo, sector, ingreso FROM usuarios WHERE id = :id");
-        $consulta->bindValue(':usuario', $usuario, PDO::PARAM_STR);
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, nombre, apellido, tipo, sector, ingreso,baja, modificado FROM usuarios WHERE id = :id");
+        $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
         $consulta->execute();
 
         return $consulta->fetchObject('Usuario');
     }
-    ///MODIFICAR
-    public static function modificarUsuario()
+
+    public function modificarUsuario()
     {
+        $egreso=date("Y-m-d"); 
         $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET usuario = :usuario, clave = :clave WHERE id = :id");
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET usuario = :usuario, clave = :clave, apellido= :apellido,tipo=:tipo,sector=:sector,modificado=:modificado  WHERE id = :id");
         $consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
         $consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
         $consulta->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
+        $consulta->bindValue(':sector', $this->sector, PDO::PARAM_STR);
+        $consulta->bindValue(':apellido', $this->id, PDO::PARAM_STR);
+        $consulta->bindValue(':modificado',$egreso , PDO::PARAM_STR);
         $consulta->execute();
     }
-///MODIFICAR
+
+
     public static function borrarUsuario($usuario)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET fechaBaja = :fechaBaja WHERE id = :id");
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET baja = :baja WHERE id = :id");
         $fecha = new DateTime(date("d-m-Y"));
         $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
-        $consulta->bindValue(':fechaBaja', date_format($fecha, 'Y-m-d H:i:s'));
+        $consulta->bindValue(':baja',$fecha);
+        $consulta->execute();
+
+        $consulta = $objAccesoDato->prepararConsulta("INSERT INTO suspendidos (id, fecha) VALUES (:id,:fecha)");
+        $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
+        $consulta->bindValue(':fecha',$fecha);
         $consulta->execute();
     }
 }

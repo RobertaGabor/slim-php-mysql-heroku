@@ -5,7 +5,7 @@ abstract class Sector
                             "cocinero"=>"Cocina/Candy bar",
                             "mozo"=>"Sin sector",
                             "socio"=>"Control general total",
-                            "cliente"=>"Mesa");
+                            );
 
     protected static function validarTipo($tipo)
     {

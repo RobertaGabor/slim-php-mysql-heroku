@@ -28,12 +28,13 @@ $app->addErrorMiddleware(true, true, true);
 $app->group('/usuarios', function (RouteCollectorProxy $group) {
     $group->get('[/]', \UsuarioController::class . ':TraerTodos'); //AQUI
     
-    $group->get('/{usuario}', \UsuarioController::class . ':TraerUno');
+    $group->get('/{id}', \UsuarioController::class . ':TraerUno'); //AQUI
     
     $group->post('[/]', \UsuarioController::class . ':CargarUno'); //AQUI
    
-    $group->post('/delete', \UsuarioController::class . ':BorrarUno');
-    $group->post('/modificar', \UsuarioController::class . ':ModificarUno');
+    $group->post('/delete', \UsuarioController::class . ':BorrarUno'); //AQUI
+    
+    $group->post('/modify', \UsuarioController::class . ':ModificarUno');//AQUI
   });
 
   $app->group('/productos', function (RouteCollectorProxy $group) {
