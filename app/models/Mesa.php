@@ -36,6 +36,21 @@ class Mesa
         return $objAccesoDatos->obtenerUltimoId();
     }
 
+    public static function obtenerTodas()
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, codigo, estado, capacidad FROM mesas");
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Mesa');
+    }
+
+
+
+
+
+
+
 }
 
 

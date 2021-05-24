@@ -33,6 +33,8 @@ class UsuarioController extends Usuario implements IApiUsable
         ->withHeader('Content-Type', 'application/json');
     }
 
+
+
     public function TraerTodos($request, $response, $args)
     {
       $lista = Usuario::obtenerTodos();
@@ -50,6 +52,8 @@ class UsuarioController extends Usuario implements IApiUsable
         ->withHeader('Content-Type', 'application/json');
     }
 
+
+    
     public function TraerUno($request, $response, $args)
     {
         // Buscamos usuario por nombre
@@ -84,6 +88,8 @@ class UsuarioController extends Usuario implements IApiUsable
           ->withHeader('Content-Type', 'application/json');
     }
 
+
+
     public function ReactivarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
@@ -99,11 +105,7 @@ class UsuarioController extends Usuario implements IApiUsable
           ->withHeader('Content-Type', 'application/json');
     }
 
-
-
-
-
-
+    
     public function BorrarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();

@@ -29,19 +29,15 @@ class MesaController extends Mesa implements IApiUsable
 
 
 
-
-
-
-
     public function TraerTodos($request, $response, $args)
     {
-      $lista = Usuario::obtenerTodos();
+      $lista = Mesa::obtenerTodas();
       if($lista!=null)
       {
-        $payload = json_encode(array("listaUsuario" => $lista));
+        $payload = json_encode(array("listaMesas" => $lista));
       }
       else{
-        $payload = json_encode(array("listaUsuario" => "No se encuentran usuarios registrados"));
+        $payload = json_encode(array("listaMesas" => "No se encuentran mesas registradas"));
       }
       
 
@@ -49,6 +45,11 @@ class MesaController extends Mesa implements IApiUsable
       return $response
         ->withHeader('Content-Type', 'application/json');
     }
+
+
+
+
+
 
     public function TraerUno($request, $response, $args)
     {
