@@ -90,7 +90,7 @@ class Usuario extends Sector
     public static function obtenerUsuario($usuario)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, nombre, apellido, tipo, sector, ingreso,baja, modificacion FROM usuarios WHERE id = :id");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, apellido, tipo, sector, ingreso,baja, modificacion FROM usuarios WHERE id = :id");
         $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
         $consulta->execute();
 
