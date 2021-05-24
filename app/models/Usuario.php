@@ -102,7 +102,7 @@ class Usuario extends Sector
         $egreso=date("Y-m-d"); 
         $claveHash = password_hash($this->clave, PASSWORD_DEFAULT);
         $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET usuario = :usuario, clave = :clave, apellido= :apellido,tipo=:tipo,sector=:sector,modificacion=:modificacion  WHERE id = :id");
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET usuario = :usuario, clave = :clave, apellido= :apellido, tipo=:tipo, sector=:sector, modificacion=:modificacion  WHERE id = :id");
         $consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
         $consulta->bindValue(':clave', $claveHash, PDO::PARAM_STR);
         $consulta->bindValue(':id', $this->id, PDO::PARAM_INT);
@@ -115,16 +115,14 @@ class Usuario extends Sector
 
     public static function reactivarUsuario($id)
     {
+        $egreso=date("Y-m-d");
         $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET baja = :baja WHERE id = :id");
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET baja = :baja,modificadon=:modificacion WHERE id = :id");
         $consulta->bindValue(':baja',null, PDO::PARAM_STR);
         $consulta->bindValue(':id', $id, PDO::PARAM_INT);
-        $consulta->execute();
-
-        $egreso=date("Y-m-d"); 
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET modificadon=:modificacion  WHERE id = :id");
-        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
         $consulta->bindValue(':modificacion', $egreso, PDO::PARAM_STR);
+        $consulta->execute();
+        
     }
 
 
