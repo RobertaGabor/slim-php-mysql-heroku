@@ -46,22 +46,22 @@ class MesaController extends Mesa implements IApiUsable
         ->withHeader('Content-Type', 'application/json');
     }
 
-
-
-
-
-
     public function TraerUno($request, $response, $args)
     {
-        // Buscamos usuario por nombre
-        $usr = $args['id']; //lo pone en el enlace directo poreso no es request es args
-        $usuario = Usuario::obtenerUsuario($usr);
-        $payload = json_encode($usuario);
+
+        $tble = $args['id']; 
+        $mesa = Mesa::obtenerMesa($tble);
+        $payload = json_encode($mesa);
 
         $response->getBody()->write($payload);
         return $response
           ->withHeader('Content-Type', 'application/json');
     }
+
+
+
+
+
 
 
     
@@ -84,25 +84,6 @@ class MesaController extends Mesa implements IApiUsable
         return $response
           ->withHeader('Content-Type', 'application/json');
     }
-
-    public function ReactivarUno($request, $response, $args)
-    {
-        $parametros = $request->getParsedBody();
-
-        $id = $parametros['id'];
-
-        Usuario::reactivarUsuario($id);        
-
-        $payload = json_encode(array("mensaje" => "Usuario reactivado con exito"));
-
-        $response->getBody()->write($payload);
-        return $response
-          ->withHeader('Content-Type', 'application/json');
-    }
-
-
-
-
 
 
     public function BorrarUno($request, $response, $args)

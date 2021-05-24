@@ -46,7 +46,15 @@ class Mesa
     }
 
 
+    public static function obtenerUsuario($usuario)
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, codigo, estado, capacidad FROM mesas WHERE id = :id");
+        $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
+        $consulta->execute();
 
+        return $consulta->fetchObject('Mesa');
+    }
 
 
 
