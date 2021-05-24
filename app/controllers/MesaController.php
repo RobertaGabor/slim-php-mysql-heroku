@@ -8,7 +8,6 @@ class MesaController extends Mesa implements IApiUsable
     {
       $parametros = $request->getParsedBody();
       $codigo = $parametros['codigo'];
-      $estado = $parametros['estado'];
       $capacidad = $parametros['capacidad'];
 
       $tble=Mesa::constructAux($codigo,$capacidad);
@@ -33,7 +32,7 @@ class MesaController extends Mesa implements IApiUsable
 
 
 
-    
+
     public function TraerTodos($request, $response, $args)
     {
       $lista = Usuario::obtenerTodos();
