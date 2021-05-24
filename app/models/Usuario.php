@@ -153,8 +153,8 @@ class Usuario extends Sector
         $consulta->bindValue(':baja',$fecha);
         $consulta->execute();
 
-        $consulta = $objAccesoDato->prepararConsulta("INSERT INTO suspendidos (id, fecha,razon) VALUES (:id,:fecha,:razon)");
-        $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
+        $consulta = $objAccesoDato->prepararConsulta("INSERT INTO suspendidos (idEmpleado, fecha,razon) VALUES (:idEmpleado,:fecha,:razon)");
+        $consulta->bindValue(':idEmpleado', $usuario, PDO::PARAM_INT);
         $consulta->bindValue(':razon', $razon, PDO::PARAM_STR);
         $consulta->bindValue(':fecha',$fecha);
         $consulta->execute();

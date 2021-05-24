@@ -71,11 +71,14 @@ class UsuarioController extends Usuario implements IApiUsable
       $lista = Usuario::obtenerBajas();
       if($lista!=null)
       {
+        console.log("Entro");///////
         $payload = json_encode(array("listaBajas" => $lista));
       }
       else{
+        console.log("No entro");///////
         $payload = json_encode(array("listaBajas" => "No se encuentran usuarios dados de baja"));
       }
+      console.log("No se sabe");///////////
       
 
       $response->getBody()->write($payload);

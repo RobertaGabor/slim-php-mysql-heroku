@@ -1,7 +1,7 @@
 <?php
 class Bajas
 {
-    public $idB;
+    public $idEmpleado;
     public $fecha;
     public $razon;
 }
