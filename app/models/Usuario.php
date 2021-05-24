@@ -125,7 +125,7 @@ class Usuario extends Sector
     {
         $egreso=date("Y-m-d");
         $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET baja = :baja,modificadon=:modificacion WHERE id = :id");
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET baja = :baja,modificacion=:modificacion WHERE id = :id");
         $consulta->bindValue(':baja',null, PDO::PARAM_STR);
         $consulta->bindValue(':id', $id, PDO::PARAM_INT);
         $consulta->bindValue(':modificacion', $egreso, PDO::PARAM_STR);
