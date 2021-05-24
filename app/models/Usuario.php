@@ -75,7 +75,7 @@ class Usuario extends Sector
     public static function validarSocios()
     {
         $count=0;
-        $lista=obtenerTodos();
+        $lista=Usuario::obtenerTodos();
 
             foreach ($lista as $value) 
             {
