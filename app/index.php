@@ -14,6 +14,7 @@ require __DIR__ . '/../vendor/autoload.php';
 require_once './db/AccesoDatos.php';
 
 require_once './controllers/UsuarioController.php';
+require_once './controllers/MesaController.php';
 
 
 $app = AppFactory::create();
