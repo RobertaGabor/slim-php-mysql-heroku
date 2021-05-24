@@ -85,7 +85,7 @@ class UsuarioController extends Usuario implements IApiUsable
           ->withHeader('Content-Type', 'application/json');
     }
 
-    public function ModificarUno($request, $response, $args)
+    public function ReactivarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
 
