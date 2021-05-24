@@ -76,7 +76,8 @@ class Usuario extends Sector
     {
         $count=0;
         $lista=Usuario::obtenerTodos();
-
+        if ($lista!=null)
+        {
             foreach ($lista as $value) 
             {
                 if ($value->tipo=="socio")
@@ -87,8 +88,10 @@ class Usuario extends Sector
                         return True;
                     }
                 }
-            }
-            return False;
+            }            
+        }
+
+        return False;
     
     }
 
