@@ -10,7 +10,7 @@ class Mesa
 
     public  static function constructAux($codigo,$capacidad)
 	{
-        if ($capacidad>0 && len($codigo)==5 && is_numeric($codigo))
+        if ($capacidad>0 && strlen($codigo)==5 && is_numeric($codigo))
         {
             $instance= new self();
             $instance->codigo=$codigo;
