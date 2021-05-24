@@ -40,7 +40,7 @@ class Usuario extends Sector
     public function crearUsuario()
     {
         $ingreso=date("Y-m-d"); 
-        $claveHash = password_hash($this->psw, PASSWORD_DEFAULT);
+        $claveHash = password_hash($this->clave, PASSWORD_DEFAULT);
         //console.log($claveHash);
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, apellido, tipo, sector, ingreso,clave,baja,modificacion) VALUES (:usuario, :apellido, :tipo, :sector, :ingreso,:clave,:baja,:modificacion)");
