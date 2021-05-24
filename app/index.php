@@ -25,6 +25,7 @@ $app->addErrorMiddleware(true, true, true);
 
 
 // Routes
+//usuarios
 $app->group('/usuarios', function (RouteCollectorProxy $group) {
     $group->get('[/]', \UsuarioController::class . ':TraerTodos'); //AQUI
     
@@ -39,6 +40,24 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
     $group->post('/reactivar', \UsuarioController::class . ':ReactivarUno');//AQUI
 
   });
+  //mesas
+  $app->group('/mesas', function (RouteCollectorProxy $group) {
+    $group->get('[/]', \MesaController::class . ':TraerTodos'); //AQUI
+    
+    $group->get('/{id}', \MesaController::class . ':TraerUno'); //AQUI
+    
+    $group->post('[/]', \MesaController::class . ':CargarUno'); //AQUI
+   
+    $group->post('/borrar', \MesaController::class . ':BorrarUno'); //AQUI
+    
+    $group->post('/modificar', \MesaController::class . ':ModificarUno');//AQUI
+  });
+
+
+
+
+
+
 
   $app->group('/productos', function (RouteCollectorProxy $group) {
     $group->get('[/]', \ProductsController::class . ':TraerTodos'); //AQUI
@@ -47,7 +66,7 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
   });
 
 $app->get('[/]', function (Request $request, Response $response) {    
-    $response->getBody()->write("Slim Framework 4 PHP");
+    $response->getBody()->write("LA COMANDA SUPERSTAR");
     return $response;
 
 });
