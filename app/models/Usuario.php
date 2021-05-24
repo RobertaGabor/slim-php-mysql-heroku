@@ -1,6 +1,7 @@
 <?php
 
 include_once "Sectores.php";
+include_once "Bajas.php";
 include_once "./db/AccesoDatos.php";
 class Usuario extends Sector 
 {
