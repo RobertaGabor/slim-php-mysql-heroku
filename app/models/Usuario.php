@@ -76,7 +76,7 @@ class Usuario extends Sector
     public static function obtenerBajas()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, fecha, razon FROM suspendidos");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT idEmpleado, fecha, razon FROM suspendidos");
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Bajas');
