@@ -76,7 +76,6 @@ class UsuarioController extends Usuario implements IApiUsable
         $us=new Usuario($usuario,$apellido,$tipo,$clave);
         $us->setID($id);        
         $us->modificarUsuario();
-        console.log($us->usuario);
 
         $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
 
