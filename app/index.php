@@ -32,9 +32,9 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
     
     $group->post('[/]', \UsuarioController::class . ':CargarUno'); //AQUI
    
-    $group->post('/delete', \UsuarioController::class . ':BorrarUno'); //AQUI
+    $group->post('/borrar', \UsuarioController::class . ':BorrarUno'); //AQUI
     
-    $group->post('/modify', \UsuarioController::class . ':ModificarUno');//AQUI
+    $group->post('/modificar', \UsuarioController::class . ':ModificarUno');//AQUI
   });
 
   $app->group('/productos', function (RouteCollectorProxy $group) {
