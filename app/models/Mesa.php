@@ -46,7 +46,7 @@ class Mesa
     }
 
 
-    public static function obtenerUsuario($usuario)
+    public static function obtenerMesa($usuario)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("SELECT id, codigo, estado, capacidad FROM mesas WHERE id = :id");
