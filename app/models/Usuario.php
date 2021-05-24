@@ -107,7 +107,7 @@ class Usuario extends Sector
         $consulta->bindValue(':clave', $this->claveHash, PDO::PARAM_STR);
         $consulta->bindValue(':id', $this->id, PDO::PARAM_INT);
         $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
-        $consulta->bindValue(':sector', $this->sector, PDO::PARAM_STR);
+        $consulta->bindValue(':sector', $this->sector=Sector::getSector($this->tipo), PDO::PARAM_STR);
         $consulta->bindValue(':apellido', $this->id, PDO::PARAM_STR);
         $consulta->bindValue(':modificacion',$egreso , PDO::PARAM_STR);
         $consulta->execute();
