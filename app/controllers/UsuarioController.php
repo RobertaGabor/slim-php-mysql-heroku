@@ -66,6 +66,23 @@ class UsuarioController extends Usuario implements IApiUsable
           ->withHeader('Content-Type', 'application/json');
     }
 
+    public function TraerBajas($request, $response, $args)
+    {
+      $lista = Usuario::obtenerBajas();
+      if($lista!=null)
+      {
+        $payload = json_encode(array("listaBajas" => $lista));
+      }
+      else{
+        $payload = json_encode(array("listaBajas" => "No se encuentran usuarios dados de baja"));
+      }
+      
+
+      $response->getBody()->write($payload);
+      return $response
+        ->withHeader('Content-Type', 'application/json');
+    }
+
 
     
     public function ModificarUno($request, $response, $args)
@@ -111,7 +128,8 @@ class UsuarioController extends Usuario implements IApiUsable
         $parametros = $request->getParsedBody();
 
         $usuarioId = $parametros['id'];
-        Usuario::borrarUsuario($usuarioId);
+        $razon = $parametros['razon'];
+        Usuario::borrarUsuario($usuarioId,$razon);
 
         $payload = json_encode(array("mensaje" => "Usuario borrado con exito"));
 

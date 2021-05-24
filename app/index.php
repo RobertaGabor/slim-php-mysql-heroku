@@ -39,6 +39,8 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
     $group->post('/modificar', \UsuarioController::class . ':ModificarUno');//AQUI
 
     $group->post('/reactivar', \UsuarioController::class . ':ReactivarUno');//AQUI
+    
+    $group->post('/bajas', \UsuarioController::class . ':TraerBajas');//AQUI
 
   });
   //mesas

@@ -72,6 +72,15 @@ class Usuario extends Sector
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
     }
 
+    public static function obtenerBajas()
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, fecha, razon FROM suspendidos");
+        $consulta->execute();
+
+        return $consulta;
+    }
+
     public static function validarSocios()
     {
         $count=0;
@@ -134,7 +143,7 @@ class Usuario extends Sector
     }
 
 
-    public static function borrarUsuario($usuario)
+    public static function borrarUsuario($usuario,$razon)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET baja = :baja WHERE id = :id");
@@ -143,8 +152,9 @@ class Usuario extends Sector
         $consulta->bindValue(':baja',$fecha);
         $consulta->execute();
 
-        $consulta = $objAccesoDato->prepararConsulta("INSERT INTO suspendidos (id, fecha) VALUES (:id,:fecha)");
+        $consulta = $objAccesoDato->prepararConsulta("INSERT INTO suspendidos (id, fecha,baja) VALUES (:id,:fecha)");
         $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
+        $consulta->bindValue(':razon', $razon, PDO::PARAM_STR);
         $consulta->bindValue(':fecha',$fecha);
         $consulta->execute();
     }

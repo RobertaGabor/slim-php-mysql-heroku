@@ -90,10 +90,10 @@ class MesaController extends Mesa implements IApiUsable
     {
         $parametros = $request->getParsedBody();
 
-        $usuarioId = $parametros['id'];
-        Usuario::borrarUsuario($usuarioId);
+        $mesaId = $parametros['id'];
+        Mesa::borrarMesa($mesaId);
 
-        $payload = json_encode(array("mensaje" => "Usuario borrado con exito"));
+        $payload = json_encode(array("mensaje" => "Mesa borrada con exito"));
 
         $response->getBody()->write($payload);
         return $response
