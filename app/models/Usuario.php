@@ -113,6 +113,14 @@ class Usuario extends Sector
         $consulta->execute();
     }
 
+    public static function reactivarUsuario($id)
+    {
+        $objAccesoDato = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET baja = :baja WHERE id = :id");
+        $consulta->bindValue(':baja',null, PDO::PARAM_STR);
+        $consulta->execute();
+    }
+
 
     public static function borrarUsuario($usuario)
     {

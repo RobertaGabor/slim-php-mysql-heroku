@@ -35,6 +35,9 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
     $group->post('/borrar', \UsuarioController::class . ':BorrarUno'); //AQUI
     
     $group->post('/modificar', \UsuarioController::class . ':ModificarUno');//AQUI
+
+    $group->post('/reactivar', \UsuarioController::class . ':ReactivarUno');//AQUI
+
   });
 
   $app->group('/productos', function (RouteCollectorProxy $group) {

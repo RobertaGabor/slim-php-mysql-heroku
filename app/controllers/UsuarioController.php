@@ -85,6 +85,21 @@ class UsuarioController extends Usuario implements IApiUsable
           ->withHeader('Content-Type', 'application/json');
     }
 
+    public function ModificarUno($request, $response, $args)
+    {
+        $parametros = $request->getParsedBody();
+
+        $id = $parametros['id'];
+
+        Usuario::reactivarUsuario($id);        
+
+        $payload = json_encode(array("mensaje" => "Usuario reactivado con exito"));
+
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
+    }
+
 
 
 
