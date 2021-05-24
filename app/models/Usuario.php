@@ -100,10 +100,11 @@ class Usuario extends Sector
     public function modificarUsuario()
     {
         $egreso=date("Y-m-d"); 
+        $claveHash = password_hash($this->clave, PASSWORD_DEFAULT);
         $objAccesoDato = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET usuario = :usuario, clave = :clave, apellido= :apellido,tipo=:tipo,sector=:sector,modificado=:modificacion  WHERE id = :id");
         $consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
-        $consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
+        $consulta->bindValue(':clave', $this->claveHash, PDO::PARAM_STR);
         $consulta->bindValue(':id', $this->id, PDO::PARAM_INT);
         $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
         $consulta->bindValue(':sector', $this->sector, PDO::PARAM_STR);
