@@ -73,7 +73,7 @@ class UsuarioController extends Usuario implements IApiUsable
         $apellido = $parametros['apellido'];
         $tipo=$parametros['tipo'];
         $clave=$parametros['clave'];
-        $us=new Usuario($usuario,$apellido,$tipo,$clave);
+        $us=Usuario::constructAux($usuario,$apellido,$tipo,$clave);
         $us->setID($id);        
         $us->modificarUsuario();
 
