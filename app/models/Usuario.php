@@ -117,14 +117,14 @@ class Usuario extends Sector
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET baja = :baja WHERE id = :id");
-        $fecha = new DateTime(date("Y-m-d"));
+        $fecha = date("Y-m-d");
         $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
-        $consulta->bindValue(':baja',str($fecha));
+        $consulta->bindValue(':baja',$fecha);
         $consulta->execute();
 
         $consulta = $objAccesoDato->prepararConsulta("INSERT INTO suspendidos (id, fecha) VALUES (:id,:fecha)");
         $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
-        $consulta->bindValue(':fecha',str($fecha));
+        $consulta->bindValue(':fecha',$fecha);
         $consulta->execute();
     }
 }
