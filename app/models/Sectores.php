@@ -1,5 +1,6 @@
 <?php
-abstract class Sector
+include_once "Bajas.php";
+abstract class Sector extends Bajas
 {
     private static $enum = array( "bartender"=>"Barra Tragos", "cervecero"=>"Barra Chopera",
                             "cocinero"=>"Cocina/Candy bar",

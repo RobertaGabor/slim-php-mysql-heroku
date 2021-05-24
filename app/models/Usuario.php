@@ -2,7 +2,7 @@
 
 include_once "Sectores.php";
 include_once "./db/AccesoDatos.php";
-class Usuario extends Sector
+class Usuario extends Sector 
 {
 
     private $id;
@@ -78,7 +78,7 @@ class Usuario extends Sector
         $consulta = $objAccesoDatos->prepararConsulta("SELECT id, fecha, razon FROM suspendidos");
         $consulta->execute();
 
-        return $consulta;
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Bajas');
     }
 
     public static function validarSocios()
