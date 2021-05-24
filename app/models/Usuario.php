@@ -36,6 +36,11 @@ class Usuario extends Sector
 
 	}
 
+    public function setID($id)
+    {
+        $this->id=$id;
+    }
+
     ///lista uno listar todos Y EN CONTROLLER CREO UNO CON ESTE CONSTR Y HAGO EL ALTA EN BASE DE DATOS
     public function crearUsuario()
     {
