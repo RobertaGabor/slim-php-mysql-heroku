@@ -4,7 +4,7 @@ require_once './interfaces/IApiUsable.php';
 
 class MesaController extends Mesa implements IApiUsable
 {
-    public function CargarUno($request, $response, $args)
+    public function CargarUna($request, $response, $args)
     {
       $parametros = $request->getParsedBody();
       $codigo = $parametros['codigo'];
@@ -29,7 +29,7 @@ class MesaController extends Mesa implements IApiUsable
 
 
 
-    public function TraerTodos($request, $response, $args)
+    public function TraerTodas($request, $response, $args)
     {
       $lista = Mesa::obtenerTodas();
       if($lista!=null)
@@ -46,10 +46,10 @@ class MesaController extends Mesa implements IApiUsable
         ->withHeader('Content-Type', 'application/json');
     }
 
-    public function TraerUno($request, $response, $args)
+    public function TraerUna($request, $response, $args)
     {
 
-        $tble = $args['id']; 
+        $tble = $args['codigo']; 
         $mesa = Mesa::obtenerMesa($tble);
         $payload = json_encode($mesa);
 
@@ -58,14 +58,8 @@ class MesaController extends Mesa implements IApiUsable
           ->withHeader('Content-Type', 'application/json');
     }
 
-
-
-
-
-
-
     
-    public function ModificarUno($request, $response, $args)
+    public function ModificarUna($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
 
@@ -76,7 +70,7 @@ class MesaController extends Mesa implements IApiUsable
         $clave=$parametros['clave'];
         $us=Usuario::constructAux($usuario,$apellido,$tipo,$clave);
         $us->setID($id);        
-        $us->modificarUsuario();
+        $us->modificarMesa();
 
         $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
 
@@ -86,7 +80,7 @@ class MesaController extends Mesa implements IApiUsable
     }
 
 
-    public function BorrarUno($request, $response, $args)
+    public function BorrarUna($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
 

@@ -24,6 +24,11 @@ class Mesa
     }
 
 
+    public function setID($id)
+    {
+        $this->id=$id;
+    }
+
     public function crearMesa()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
@@ -50,8 +55,8 @@ class Mesa
     public static function obtenerMesa($usuario)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, codigo, estado, capacidad, baja FROM mesas WHERE id = :id");
-        $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, codigo, estado, capacidad, baja FROM mesas WHERE codigo = :codigo");
+        $consulta->bindValue(':codigo', $usuario, PDO::PARAM_INT);
         $consulta->execute();
 
         return $consulta->fetchObject('Mesa');
@@ -60,13 +65,24 @@ class Mesa
     public static function borrarMesa($usuario)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE mesas SET baja = :baja WHERE id = :id");
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE mesas SET baja = :baja WHERE codigo = :codigo");
         $fecha = date("Y-m-d");
-        $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
+        $consulta->bindValue(':codigo', $usuario, PDO::PARAM_INT);
         $consulta->bindValue(':baja',$fecha);
         $consulta->execute();
     }
 
+    public function modificarMesa()
+    {
+        $egreso=date("Y-m-d"); 
+
+        $objAccesoDato = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE mesas SET estado = :estado, capacidad= :capacidad, modificacion=:modificacion  WHERE codigo = :codigo");
+        $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
+        $consulta->bindValue(':codigo', $this->codigo, PDO::PARAM_INT);
+        $consulta->bindValue(':modificacion',$egreso , PDO::PARAM_STR);
+        $consulta->execute();
+    }
 
 }
 

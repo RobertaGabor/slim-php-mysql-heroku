@@ -45,15 +45,15 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
   });
   //mesas
   $app->group('/mesas', function (RouteCollectorProxy $group) {
-    $group->get('[/]', \MesaController::class . ':TraerTodos'); //AQUI
+    $group->get('[/]', \MesaController::class . ':TraerTodas'); //AQUI
     
-    $group->get('/{id}', \MesaController::class . ':TraerUno'); //AQUI
+    $group->get('/{id}', \MesaController::class . ':TraerUna'); //AQUI
     
-    $group->post('[/]', \MesaController::class . ':CargarUno'); //AQUI
+    $group->post('[/]', \MesaController::class . ':CargarUna'); //AQUI
    
-    $group->post('/borrar', \MesaController::class . ':BorrarUno'); //AQUI
+    $group->post('/borrar', \MesaController::class . ':BorrarUna'); //AQUI
     
-    $group->post('/modificar', \MesaController::class . ':ModificarUno');//AQUI
+    $group->post('/modificar', \MesaController::class . ':ModificarUna');//AQUI
   });
 
 
