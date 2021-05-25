@@ -1,4 +1,9 @@
 <?php
+include_once "Pedido.php";
+include_once "Usuario.php";
+include_once "Mesa.php";
+include_once "Cliente.php";
+include_once "Atencion.php";
 require_once './interfaces/IApiUsable.php';
 
 class ClienteController extends Cliente implements IApiUsable
@@ -13,7 +18,24 @@ class ClienteController extends Cliente implements IApiUsable
       $cliente=Cliente::constructAux($cantidad,$nombre,$idMozo);
       if($cliente!=null)
       {
-        $idCliente=$usr->crearCliente();
+        $idCliente=$cliente->crearCliente();
+        //genero pedido al usar CrearPedido devuelve id y lo  pongo en el atributo
+        $pedido=Pedido::constructAux($idcliente);
+        if($pedido!=null)
+        {
+          //le seteo el idPedido
+          $idPedido=$pedido->crearPedido();
+          //genero atencion
+          //pido mesa
+          $mesa=Mesa::obtenerMesa($cliente->codMesa);
+          $idMesa=$mesa->getID();
+          $att=Atencion::constructAux($idcliente,$idMesa,$idPedido);
+          Atencion::crearAtencion($att);
+
+          //despues cuando agrego productos al pedido que devuelva el id del pedido
+
+        }
+        
 
         $payload = json_encode(array("mensaje" => "Cliente creado con exito ID DE CLIENTE PARA GENERAR PEDIDO: "+$idCliente));
       }
@@ -31,13 +53,13 @@ class ClienteController extends Cliente implements IApiUsable
 
     public function TraerTodos($request, $response, $args)
     {
-      $lista = Usuario::obtenerTodos();
+      $lista = Cliente::obtenerTodos();
       if($lista!=null)
       {
-        $payload = json_encode(array("listaUsuario" => $lista));
+        $payload = json_encode(array("listaClientes" => $lista));
       }
       else{
-        $payload = json_encode(array("listaUsuario" => "No se encuentran usuarios registrados"));
+        $payload = json_encode(array("listaUsuario" => "No se encuentran clietnes registrados"));
       }
       
 
@@ -52,7 +74,7 @@ class ClienteController extends Cliente implements IApiUsable
     {
         // Buscamos usuario por nombre
         $usr = $args['id']; //lo pone en el enlace directo poreso no es request es args
-        $usuario = Usuario::obtenerUsuario($usr);
+        $usuario = Cliente::obtenerUsuario($usr);
         $payload = json_encode($usuario);
 
         $response->getBody()->write($payload);
@@ -60,64 +82,27 @@ class ClienteController extends Cliente implements IApiUsable
           ->withHeader('Content-Type', 'application/json');
     }
 
-    public function TraerBajas($request, $response, $args)
-    {
-      $lista = Bajas::obtenerBajas();
-      if($lista!=null)
-      {
-
-        $payload = json_encode(array("listaBajas" => $lista));
-      }
-      else{
-
-        $payload = json_encode(array("listaBajas" => "No se encuentran usuarios dados de baja"));
-      }
-
-      $response->getBody()->write($payload);
-      return $response
-        ->withHeader('Content-Type', 'application/json');
-    }
-
-
-    
+   
     public function ModificarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
 
         $id = $parametros['id'];
-        $usuario = $parametros['usuario'];
-        $apellido = $parametros['apellido'];
-        $tipo=$parametros['tipo'];
-        $clave=$parametros['clave'];
-        $us=Usuario::constructAux($usuario,$apellido,$tipo,$clave);
+        $mozo = $parametros['idMozo'];
+        $respons = $parametros['responsable'];
+        $cant=$parametros['cantidad'];
+
+        $us=Cliente::constructAux($cant,$respons,$mozo);
         $us->setID($id);        
-        $us->modificarUsuario();
+        $us->modificarCliente();
 
-        $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
-
-        $response->getBody()->write($payload);
-        return $response
-          ->withHeader('Content-Type', 'application/json');
-    }
-
-
-
-    public function ReactivarUno($request, $response, $args)
-    {
-        $parametros = $request->getParsedBody();
-
-        $id = $parametros['id'];
-
-        Usuario::reactivarUsuario($id);        
-
-        $payload = json_encode(array("mensaje" => "Usuario reactivado con exito"));
+        $payload = json_encode(array("mensaje" => "Cliente modificado con exito"));
 
         $response->getBody()->write($payload);
         return $response
           ->withHeader('Content-Type', 'application/json');
     }
-
-    
+    //borro pedido y atencion y libero mesa
     public function BorrarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();

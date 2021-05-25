@@ -64,7 +64,7 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
     
     $group->post('[/]', \ClienteController::class . ':CargarUno'); //AQUI CUANDO CARGA BUSCA CODIGO DE MESA LIBRE Y GENERO UNA ATENCION EN LA BASE, DEVUELVE ID CLIENTE CON ESO GENERO PEDIDO
    
-    $group->post('/borrar', \ClienteController::class . ':BorrarUno'); //AQUI
+    $group->post('/borrar', \ClienteController::class . ':BorrarUno'); //AQUI OMDIFICO EGRESO EN ATENCION
     
     $group->post('/modificar', \ClienteController::class . ':ModificarUno');//AQUI
 
@@ -72,15 +72,15 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
 
   //pedidos
   $app->group('/pedidos', function (RouteCollectorProxy $group) {
-      $group->post('/{idCliente}/cargar', \ProductoController::class . ':TraerTodos'); //AQUI ARMA PEDIDO y conc ada cargar genera nuevo producto EN LA ABSE
+      $group->post('/{idCliente}', \ProductoController::class . ':CargarUno'); //AQUI ARMA PEDIDO y conc ada cargar genera nuevo producto EN LA ABSE
       
-      $group->post('/borrar', \MesaController::class . ':BorrarUno'); //AQUI SI BORRO ELIMINO LOS PEDIDOS
+      $group->post('/borrar', \MesaController::class . ':BorrarUno'); //AQUI SI BORRO ELIMINO LOS PRODUCTOS
     
       $group->post('/modificar', \MesaController::class . ':ModificarUno');//AQUI depende que modifico productos
   
       $group->get('[/]', \MesaController::class . ':TraerTodos'); //AQUI
     
-      $group->get('/{idCliente}', \MesaController::class . ':TraerUno'); //AQUI
+      $group->get('/{nroPedido}', \MesaController::class . ':TraerUno'); //AQUI
   });
 
 

@@ -1,5 +1,6 @@
 <?php
 include_once "Pedido.php";
+include_once "Atencion.php";
 include_once "Mesa.php";
 include_once "Usuario.php";
 include_once "./db/AccesoDatos.php";
@@ -24,14 +25,10 @@ class Cliente
                 $instance->responsable=$responsable;
                 $instance->cantidad=$cantidad;
                 $instance->idMozo=$mozo;
-                $instance->codMesa=$aux;
+                $instance->codMesa=$aux->codigo;
 
                 $aux->estado="recien ingresados";
                 $aux->cambiarEstadoMesa();
-
-                //genero pedido al usar CrearPedido devuelve id y lo  pongo en el atributo
-
-
                 return $instance;                
             }
 
@@ -40,19 +37,6 @@ class Cliente
 
 	}
 
-    private static function obtenerMesa($mesas,$capacidad)
-    {
-        for ($i=0;$i<count($mesas);$i++)
-        {
-            
-            if((strcmp($mesas[i]->estado,"cerrado")!=0)&&$mesas[i]->baja==null&&$mesas[i]->capacidad==$capacidad)
-            {
-                return $mesas[i];
-            }
-        }
-
-        return null;
-    }
 
     public function setID($id)
     {
@@ -61,113 +45,66 @@ class Cliente
 
 
 
-
     ///lista uno listar todos Y EN CONTROLLER CREO UNO CON ESTE CONSTR Y HAGO EL ALTA EN BASE DE DATOS
-    public function crearUsuario()
+    public function crearCliente()
     {
-        $ingreso=date("Y-m-d"); 
-        $claveHash = password_hash($this->clave, PASSWORD_DEFAULT);
-        //console.log($claveHash);
+
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, apellido, tipo, sector, ingreso,clave,baja,modificacion) VALUES (:usuario, :apellido, :tipo, :sector, :ingreso,:clave,:baja,:modificacion)");
-        $consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
-        $consulta->bindValue(':apellido', $this->apellido, PDO::PARAM_STR);
-        $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
-        $consulta->bindValue(':sector', $this->sector, PDO::PARAM_STR);
-        $consulta->bindValue(':ingreso', $ingreso, PDO::PARAM_STR);
-        $consulta->bindValue(':clave', $claveHash, PDO::PARAM_STR);
-        $consulta->bindValue(':baja', null, PDO::PARAM_STR);
-        $consulta->bindValue(':modificacion', null, PDO::PARAM_STR);
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO clientes (responsable, cantidad, codMesa, idMozo) VALUES (:responsable, :cantidad, :codMesa, :idMozo)");
+        $consulta->bindValue(':responsable', $this->responsable, PDO::PARAM_STR);
+        $consulta->bindValue(':codMesa', $this->codMeza, PDO::PARAM_INT);
+        $consulta->bindValue(':cantidad', $this->cantidad, PDO::PARAM_INT);
+        $consulta->bindValue(':idMozo', $this->idMozo, PDO::PARAM_INT);
         $consulta->execute();
 
         return $objAccesoDatos->obtenerUltimoId();
     }
 
-
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, apellido, tipo, sector, ingreso,baja, modificacion FROM usuarios");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, responsable, cantidad, codMesa, idMozo, modificacion FROM clientes");
         $consulta->execute();
 
-        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Cliente');
     }
 
-    public static function validarSocios()
-    {
-        $count=0;
-        $lista=Usuario::obtenerTodos();
-        if ($lista!=null)
-        {
-            foreach ($lista as $value) 
-            {
-                if ($value->tipo=="socio")
-                {
-                    $count+=1;
-                    if($count==3)
-                    {
-                        return True;
-                    }
-                }
-            }            
-        }
 
-        return False;
-    
-    }
-
-    public static function obtenerUsuario($usuario)
+    public static function obtenerUsuario($clienteid)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, apellido, tipo, sector, ingreso,baja, modificacion FROM usuarios WHERE id = :id");
-        $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, responsable, cantidad, codMesa, idMozo, modificacion FROM clientes WHERE id = :id");
+        $consulta->bindValue(':id', $clienteid, PDO::PARAM_INT);
         $consulta->execute();
 
-        return $consulta->fetchObject('Usuario');
+        return $consulta->fetchObject('Cliente');
     }
 
-    public function modificarUsuario()
+    //actualizo modificacion
+    public function modificarCliente()
     {
         $egreso=date("Y-m-d"); 
-        $claveHash = password_hash($this->clave, PASSWORD_DEFAULT);
+
         $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET usuario = :usuario, clave = :clave, apellido= :apellido, tipo=:tipo, sector=:sector, modificacion=:modificacion  WHERE id = :id");
-        $consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
-        $consulta->bindValue(':clave', $claveHash, PDO::PARAM_STR);
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE clientes SET idMozo=:idMozo,responsable=:responsable, cantidad=:cantidad, modificacion=:modificacion  WHERE id = :id");
         $consulta->bindValue(':id', $this->id, PDO::PARAM_INT);
-        $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
-        $consulta->bindValue(':sector', $this->sector, PDO::PARAM_STR);
-        $consulta->bindValue(':apellido', $this->id, PDO::PARAM_STR);
+        $consulta->bindValue(':responsable', $this->responsable, PDO::PARAM_STR);
+        $consulta->bindValue(':cantidad', $this->cantidad, PDO::PARAM_INT);
+        $consulta->bindValue(':idMozo', $this->idMozo, PDO::PARAM_INT);
         $consulta->bindValue(':modificacion',$egreso , PDO::PARAM_STR);
         $consulta->execute();
     }
 
-    public static function reactivarUsuario($id)
-    {
-        $egreso=date("Y-m-d");
-        $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET baja = :baja,modificacion=:modificacion WHERE id = :id");
-        $consulta->bindValue(':baja',null, PDO::PARAM_STR);
-        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
-        $consulta->bindValue(':modificacion', $egreso, PDO::PARAM_STR);
-        $consulta->execute();
-        
-    }
-
-
-    public static function borrarUsuario($usuario,$razon)
+    //cuando hago baja de cliente (xq no consume nada al final) hago baja de pedido y atencion
+    public static function borrarCliente($usuario)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET baja = :baja WHERE id = :id");
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE clientes SET baja = :baja WHERE id = :id");
         $fecha = date("Y-m-d");
         $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
         $consulta->bindValue(':baja',$fecha);
         $consulta->execute();
+        //llamo a borrar pedido(ESTE BORRA PRODUCTOS) y borrar atencion(egreso)
 
-        $consulta = $objAccesoDato->prepararConsulta("INSERT INTO suspendidos (idEmpleado, fecha,razon) VALUES (:idEmpleado,:fecha,:razon)");
-        $consulta->bindValue(':idEmpleado', $usuario, PDO::PARAM_INT);
-        $consulta->bindValue(':razon', $razon, PDO::PARAM_STR);
-        $consulta->bindValue(':fecha',$fecha);
-        $consulta->execute();
     }
 }

@@ -7,9 +7,10 @@ class pedido
     public $codigo;
     public $precioTotal;
     public $tiempoEstimadoTotal;
+    public $idCliente;
 
 
-    public static function constructAux()
+    public static function constructAux($idCliente)
 	{
         while(($aux=Pedido::generateRandomCode())==True)
         {
@@ -18,6 +19,7 @@ class pedido
             $instance->precioTotal=0;
             $instance->tiempoEstimadoTotal=null;
             $instance->codigo=$aux;
+            $instance->idCliente=$idCliente;
         }
 
         return $instance;
@@ -49,7 +51,7 @@ class pedido
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, codigo, estado, tiempoEstimadoTotal, precioTotal FROM pedidos");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, codigo, estado, tiempoEstimadoTotal, precioTotal, baja, modificacion FROM pedidos");
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Pedido');
@@ -58,13 +60,12 @@ class pedido
     public function crearPedido()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos (usuario, apellido, tipo, sector, ingreso,clave,baja,modificacion) VALUES (:usuario, :apellido, :tipo, :sector, :ingreso,:clave,:baja,:modificacion)");
-        $consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
-        $consulta->bindValue(':apellido', $this->apellido, PDO::PARAM_STR);
-        $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
-        $consulta->bindValue(':sector', $this->sector, PDO::PARAM_STR);
-        $consulta->bindValue(':ingreso', $ingreso, PDO::PARAM_STR);
-        $consulta->bindValue(':clave', $claveHash, PDO::PARAM_STR);
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos (codigo, estado, tiempoEstimadoTotal, precioTotal, idCliente, baja, modificacion) VALUES (:codigo, :estado, :tiempoEstimadoTotal, :precioTotal, :idCliente, :baja, :modificacion)");
+        $consulta->bindValue(':codigo', $this->codigo, PDO::PARAM_STR);
+        $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
+        $consulta->bindValue(':tiempoEstimadoTotal', $this->tiempoEstimadoTotal, PDO::PARAM_STR);
+        $consulta->bindValue(':precioTotal', $this->precioTotal, PDO::PARAM_STR);
+        $consulta->bindValue(':idCliente', $this->idCliente, PDO::PARAM_INT);
         $consulta->bindValue(':baja', null, PDO::PARAM_STR);
         $consulta->bindValue(':modificacion', null, PDO::PARAM_STR);
         $consulta->execute();

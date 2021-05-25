@@ -11,10 +11,7 @@ class ProductsController extends Producto implements IApiUsable
       $tipo = $parametros['precio'];
       $apellido = $parametros['cantidad'];
 
-      // Creamos el usuario
-      // $usr = new Usuario();
-      // $usr->usuario = $usuario;
-      // $usr->clave = $clave;
+
       $pdt=Producto::constructAux($precio,$nombre,$cantidad);
       if($pdt!=null)
       {

@@ -24,6 +24,25 @@ class Mesa
     }
 
 
+    private static function obtenerMesa($mesas,$capacidad)
+    {
+        for ($i=0;$i<count($mesas);$i++)
+        {
+            
+            if((strcmp($mesas[i]->estado,"cerrado")!=0)&&$mesas[i]->baja==null&&$mesas[i]->capacidad==$capacidad)
+            {
+                return $mesas[i];
+            }
+        }
+
+        return null;
+    }
+
+    public function getID($id)
+    {
+        return $this->id;
+    }
+
     public function setEstado($estado)
     {
         $this->estado=$estado;
