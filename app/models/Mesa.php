@@ -24,9 +24,9 @@ class Mesa
     }
 
 
-    public function setID($id)
+    public function setEstado($id)
     {
-        $this->id=$id;
+        $this->estado=$estado;
     }
 
     public function crearMesa()
