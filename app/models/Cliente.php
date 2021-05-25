@@ -1,4 +1,5 @@
 <?php
+include_once "Pedido.php";
 include_once "Mesa.php";
 include_once "Usuario.php";
 include_once "./db/AccesoDatos.php";
@@ -27,6 +28,10 @@ class Cliente
 
                 $aux->estado="recien ingresados";
                 $aux->cambiarEstadoMesa();
+
+                //genero pedido al usar CrearPedido devuelve id y lo  pongo en el atributo
+
+
                 return $instance;                
             }
 
