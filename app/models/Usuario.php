@@ -72,9 +72,6 @@ class Usuario extends Sector
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
     }
 
-
-    }
-
     public static function validarSocios()
     {
         $count=0;

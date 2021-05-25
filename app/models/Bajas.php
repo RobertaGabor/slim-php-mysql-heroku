@@ -13,6 +13,7 @@ class Bajas
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Bajas');
+    }
 }
 
 ?>
