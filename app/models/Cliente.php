@@ -1,5 +1,6 @@
 <?php
 include_once "Mesa.php";
+include_once "Usuario.php";
 include_once "./db/AccesoDatos.php";
 class Cliente
 {
@@ -16,7 +17,7 @@ class Cliente
 		if($cantidad>0)
 		{
             $lista=Mesa::obtenerTodos();
-            if (($aux=Cliente::obtenerMesa($lista,$capacidad))!=null)
+            if (($aux=Cliente::obtenerMesa($lista,$capacidad))!=null&&Usuario::verificarMozo($mozo)==True)
             {
                 $instance= new self();
                 $instance->responsable=$responsable;
@@ -36,7 +37,7 @@ class Cliente
 
     private static function obtenerMesa($mesas,$capacidad)
     {
-        for ($i=0;i<count($mesas);i++)
+        for ($i=0;$i<count($mesas);$i++)
         {
             
             if((strcmp($mesas[i]->estado,"cerrado")!=0)&&$mesas[i]->baja==null&&$mesas[i]->capacidad==$capacidad)
@@ -52,6 +53,9 @@ class Cliente
     {
         $this->id=$id;
     }
+
+
+
 
     ///lista uno listar todos Y EN CONTROLLER CREO UNO CON ESTE CONSTR Y HAGO EL ALTA EN BASE DE DATOS
     public function crearUsuario()

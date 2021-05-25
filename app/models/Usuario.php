@@ -63,6 +63,22 @@ class Usuario extends Sector
     }
 
 
+    public static function verificarMozo($id)
+    {
+        $lista=Usuario::obtenerTodos();
+
+        for($i=0;$i<count($lista);$i++)
+        {
+            if($lista[i]->id==$id)
+            {
+                return True;
+            }
+        }
+
+        return False;
+
+    }
+
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();

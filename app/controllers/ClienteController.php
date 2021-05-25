@@ -6,25 +6,20 @@ class ClienteController extends Cliente implements IApiUsable
     public function CargarUno($request, $response, $args)
     {
       $parametros = $request->getParsedBody();
-      $nombre = $parametros['usuario'];
-      $tipo = $parametros['tipo'];
-      $apellido = $parametros['apellido'];
-      $clave = $parametros['clave'];
+      $nombre = $parametros['responsable'];
+      $cantidad = $parametros['cantidad'];
+      $idMozo = $parametros['idMozo'];
 
-      // Creamos el usuario
-      // $usr = new Usuario();
-      // $usr->usuario = $usuario;
-      // $usr->clave = $clave;
-      $usr=Usuario::constructAux($nombre,$apellido,$tipo,$clave);
-      if($usr!=null)
+      $cliente=Cliente::constructAux($cantidad,$nombre,$idMozo);
+      if($cliente!=null)
       {
-        $usr->crearUsuario();
+        $idCliente=$usr->crearCliente();
 
-        $payload = json_encode(array("mensaje" => "Usuario creado con exito"));
+        $payload = json_encode(array("mensaje" => "Cliente creado con exito ID DE CLIENTE PARA GENERAR PEDIDO: "+$idCliente));
       }
       else
       {
-        $payload = json_encode(array("mensaje" => "Usuario no se pudo crear"));
+        $payload = json_encode(array("mensaje" => "Cliente no se pudo crear"));
       }
 
       $response->getBody()->write($payload);
