@@ -4,7 +4,7 @@ require_once './interfaces/IApiUsable.php';
 
 class MesaController extends Mesa implements IApiUsable
 {
-    public function CargarUna($request, $response, $args)
+    public function CargarUno($request, $response, $args)
     {
       $parametros = $request->getParsedBody();
       $codigo = $parametros['codigo'];
@@ -29,7 +29,7 @@ class MesaController extends Mesa implements IApiUsable
 
 
 
-    public function TraerTodas($request, $response, $args)
+    public function TraerTodos($request, $response, $args)
     {
       $lista = Mesa::obtenerTodas();
       if($lista!=null)
@@ -46,7 +46,7 @@ class MesaController extends Mesa implements IApiUsable
         ->withHeader('Content-Type', 'application/json');
     }
 
-    public function TraerUna($request, $response, $args)
+    public function TraerUno($request, $response, $args)
     {
 
         $tble = $args['codigo']; 
@@ -59,7 +59,7 @@ class MesaController extends Mesa implements IApiUsable
     }
 
     
-    public function ModificarUna($request, $response, $args)
+    public function ModificarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
 
@@ -80,7 +80,7 @@ class MesaController extends Mesa implements IApiUsable
     }
 
 
-    public function BorrarUna($request, $response, $args)
+    public function BorrarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
 
