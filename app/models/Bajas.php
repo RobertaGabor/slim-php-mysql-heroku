@@ -1,7 +1,8 @@
 <?php
+include_once "./db/AccesoDatos.php";
 class Bajas
 {
-    public $idEmpleado;
+    private $idEmpleado;
     public $fecha;
     public $razon;
 
