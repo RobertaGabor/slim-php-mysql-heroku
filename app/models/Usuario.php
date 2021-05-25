@@ -1,7 +1,6 @@
 <?php
 
 include_once "Sectores.php";
-include_once "Bajas.php";
 include_once "./db/AccesoDatos.php";
 class Usuario extends Sector 
 {
@@ -73,13 +72,7 @@ class Usuario extends Sector
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
     }
 
-    public static function obtenerBajas()
-    {
-        $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT idEmpleado, fecha, razon FROM suspendidos");
-        $consulta->execute();
 
-        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Bajas');
     }
 
     public static function validarSocios()
