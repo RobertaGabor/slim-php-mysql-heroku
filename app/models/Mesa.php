@@ -80,6 +80,7 @@ class Mesa
         $consulta = $objAccesoDato->prepararConsulta("UPDATE mesas SET estado = :estado, capacidad= :capacidad, modificacion=:modificacion  WHERE codigo = :codigo");
         $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
         $consulta->bindValue(':codigo', $this->codigo, PDO::PARAM_INT);
+        $consulta->bindValue(':capacidad', $this->capacidad, PDO::PARAM_INT);
         $consulta->bindValue(':modificacion',$egreso , PDO::PARAM_STR);
         $consulta->execute();
     }
