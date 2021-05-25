@@ -80,8 +80,6 @@ class UsuarioController extends Usuario implements IApiUsable
         $payload = json_encode(array("listaBajas" => "No se encuentran usuarios dados de baja"));
       }
 
-      
-
       $response->getBody()->write($payload);
       return $response
         ->withHeader('Content-Type', 'application/json');

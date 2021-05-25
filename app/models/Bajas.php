@@ -2,7 +2,7 @@
 include_once "./db/AccesoDatos.php";
 class Bajas
 {
-    private $idEmpleado;
+    public $idEmpleado;
     public $fecha;
     public $razon;
 
