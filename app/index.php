@@ -47,7 +47,7 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
   $app->group('/mesas', function (RouteCollectorProxy $group) {
     $group->get('[/]', \MesaController::class . ':TraerTodos'); //AQUI
     
-    $group->get('/{id}', \MesaController::class . ':TraerUno'); //AQUI
+    $group->get('/{codigo}', \MesaController::class . ':TraerUno'); //AQUI
     
     $group->post('[/]', \MesaController::class . ':CargarUno'); //AQUI
    
@@ -56,17 +56,48 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
     $group->post('/modificar', \MesaController::class . ':ModificarUno');//AQUI
   });
 
+  //clientes
+  $app->group('/clientes', function (RouteCollectorProxy $group) {
+    $group->get('[/]', \ClienteController::class . ':TraerTodos'); //AQUI
+    
+    $group->get('/{id}', \ClienteController::class . ':TraerUno'); //AQUI
+    
+    $group->post('[/]', \ClienteController::class . ':CargarUno'); //AQUI CUANDO CARGA BUSCA CODIGO DE MESA LIBRE Y GENERO UNA ATENCION EN LA BASE, DEVUELVE ID CLIENTE CON ESO GENERO PEDIDO
+   
+    $group->post('/borrar', \ClienteController::class . ':BorrarUno'); //AQUI
+    
+    $group->post('/modificar', \ClienteController::class . ':ModificarUno');//AQUI
 
+  }); 
 
-
-
-
-
-  $app->group('/productos', function (RouteCollectorProxy $group) {
-    $group->get('[/]', \ProductsController::class . ':TraerTodos'); //AQUI
-        
-    $group->post('[/]', \ProductsController::class . ':CargarUno'); //AQUI
+  //pedidos
+  $app->group('/pedidos', function (RouteCollectorProxy $group) {
+      $group->post('/{idCliente}/cargar', \ProductoController::class . ':TraerTodos'); //AQUI ARMA PEDIDO y conc ada cargar genera nuevo producto EN LA ABSE
+      
+      $group->post('/borrar', \MesaController::class . ':BorrarUno'); //AQUI SI BORRO ELIMINO LOS PEDIDOS
+    
+      $group->post('/modificar', \MesaController::class . ':ModificarUno');//AQUI depende que modifico productos
+  
+      $group->get('[/]', \MesaController::class . ':TraerTodos'); //AQUI
+    
+      $group->get('/{idCliente}', \MesaController::class . ':TraerUno'); //AQUI
   });
+
+
+  //productos
+  $app->group('/productos', function (RouteCollectorProxy $group) {
+    $group->get('[/]', \ProductoController::class . ':TraerTodos'); //AQUI
+    
+    $group->get('/{codigo}', \ProductoController::class . ':TraerUno'); //AQUI
+       
+    $group->post('/borrar', \ProductoController::class . ':BorrarUno'); //AQUI SI BORRO MODIFICO PEDIDO
+    
+    $group->post('/modificar', \ProductoController::class . ':ModificarUno');//AQUI SI MODIFICO UN PRODUCTO QUE ME MODIFIQUE PEDIDO
+  });
+
+
+
+
 
 $app->get('[/]', function (Request $request, Response $response) {    
     $response->getBody()->write("LA COMANDA SUPERSTAR");

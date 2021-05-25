@@ -85,6 +85,18 @@ class Mesa
         $consulta->execute();
     }
 
+
+    public function cambiarEstadoMesa()
+    {
+        $egreso=date("Y-m-d"); 
+
+        $objAccesoDato = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE mesas SET estado = :estado, modificacion=:modificacion  WHERE codigo = :codigo");
+        $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
+        $consulta->bindValue(':codigo', $this->codigo, PDO::PARAM_INT);
+        $consulta->bindValue(':modificacion',$egreso , PDO::PARAM_STR);
+        $consulta->execute();
+    }
 }
 
 
