@@ -24,7 +24,7 @@ class Mesa
     }
 
 
-    public function setEstado($id)
+    public function setEstado($estado)
     {
         $this->estado=$estado;
     }

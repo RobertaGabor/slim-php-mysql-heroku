@@ -69,7 +69,7 @@ class MesaController extends Mesa implements IApiUsable
 
         $ms=Mesa::constructAux($codigo,$capacidad);
         $ms->setEstado($estado);        
-        $us->modificarMesa();
+        $ms->modificarMesa();
 
         $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
 
