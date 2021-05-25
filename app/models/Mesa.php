@@ -60,7 +60,7 @@ class Mesa
     public static function borrarMesa($usuario)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE mesa SET baja = :baja WHERE id = :id");
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE mesas SET baja = :baja WHERE id = :id");
         $fecha = date("Y-m-d");
         $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
         $consulta->bindValue(':baja',$fecha);
