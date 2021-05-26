@@ -37,6 +37,17 @@ class Atenciones
 
     //BORRAR ->EGRESO CUANDO: doy de baja el cliente o cuando ya se termino de comer y pagar
 
+    public static function borrarAtencion($idCliente)
+    {
+        $objAccesoDato = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE atencion SET egreso = :egreso WHERE idCliente = :idCliente");
+        $fecha = date("Y-m-d H:i:s");
+        $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
+        $consulta->bindValue(':egreso',$fecha);
+        $consulta->execute();
+        //llamo a borrar pedido(ESTE BORRA PRODUCTOS) y borrar atencion(egreso)
+
+    }
 }
 
 

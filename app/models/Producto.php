@@ -62,6 +62,16 @@
         //hacer 2 bajas una por pedido, donde la voy a llamar del controlador de pedido cuando este de de baja
         //otra por id, este va a modificar campos de pedido
 
+        public static function borrarProductoPorPedido($ped)
+        {
+            $objAccesoDato = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDato->prepararConsulta("UPDATE productos SET baja = :baja WHERE codPedido = :codPedido");
+            $fecha = date("Y-m-d");
+            $consulta->bindValue(':codPedido', $ped, PDO::PARAM_INT);
+            $consulta->bindValue(':baja',$fecha);
+            $consulta->execute();
+        }
+
 
     }
 

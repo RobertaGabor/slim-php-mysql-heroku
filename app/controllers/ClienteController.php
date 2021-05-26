@@ -107,9 +107,17 @@ class ClienteController extends Cliente implements IApiUsable
     {
         $parametros = $request->getParsedBody();
 
-        $usuarioId = $parametros['id'];
-        $razon = $parametros['razon'];
-        Usuario::borrarUsuario($usuarioId,$razon);
+        $usuarioId = $parametros['id'];     
+        Cliente::borrarCliente($usuarioId);
+        Pedido::borrarPedidoPorCliente($usuarioId);
+        Atencion::borrarAtencion($usuarioId);
+
+        //liberar mesa hacer funcion que llame a modificar pero tome todos los datos y cambie solo estado a lista para cerrar
+        //traer ese cliente, buscar su mesa, y a ese codigo cambiarle el estado
+
+        $aux=Cliente::obtenerCliente($usuarioId);
+        $aux->estado="lista para cerrar"; //la cierra un socio
+        $aux->ModificarMesa();
 
         $payload = json_encode(array("mensaje" => "Usuario borrado con exito"));
 

@@ -1,5 +1,5 @@
 <?php
-
+include_once "Producto.php";
 class pedido
 {
     private $id;
@@ -28,6 +28,11 @@ class pedido
 
 	}
 
+    public function getID()
+    {
+        return $this->id;
+    }
+
     private static function generateRandomCode()
     {
         $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUV';
@@ -47,6 +52,18 @@ class pedido
         return False;
     }
 
+    public static function traerPedidoPorCliente($idCliente)
+    {
+        $lista=Pedido::obtenerTodos();
+        for($i=0;$i<count($lista);$i++)
+        {
+            if($lista[i]->idCliente==$idCliente)
+            {
+                return $lista[i];
+            }
+        }
+        return null;
+    }
 
     public static function obtenerTodos()
     {
@@ -72,6 +89,26 @@ class pedido
 
         return $objAccesoDatos->obtenerUltimoId();
     }
+
+    public static function borrarPedidoPorCliente($idCliente)
+    {
+        $objAccesoDato = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE pedidos SET baja = :baja WHERE id = :id");
+        $fecha = date("Y-m-d");
+        $consulta->bindValue(':id', $idCliente, PDO::PARAM_INT);
+        $consulta->bindValue(':baja',$fecha);
+        $consulta->execute();
+        //llamo a borrar pedido(ESTE BORRA PRODUCTOS) 
+        if(($ux=Pedido::traerPedidoPorCliente($idCliente))!=null)
+        {
+            $idPedido=$ux->getID();
+            Producto::borrarProductoPorPedido($idPedido);
+        }
+        
+    }
+
+
+
 }
 
 

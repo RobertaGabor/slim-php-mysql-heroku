@@ -70,7 +70,7 @@ class Cliente
     }
 
 
-    public static function obtenerUsuario($clienteid)
+    public static function obtenerCliente($clienteid)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("SELECT id, responsable, cantidad, codMesa, idMozo, modificacion FROM clientes WHERE id = :id");
