@@ -24,7 +24,7 @@ class Mesa
     }
 
 
-    private static function obtenerMesa($mesas,$capacidad)
+    public static function obtenerMesaLibre($mesas,$capacidad)
     {
         for ($i=0;$i<count($mesas);$i++)
         {

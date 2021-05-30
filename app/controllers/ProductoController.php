@@ -4,31 +4,7 @@ require_once './interfaces/IApiUsable.php';
 
 class ProductsController extends Producto implements IApiUsable
 {
-    public function CargarUno($request, $response, $args)
-    {
-      $parametros = $request->getParsedBody();
-      $nombre = $parametros['nombre'];
-      $tipo = $parametros['precio'];
-      $apellido = $parametros['cantidad'];
-
-
-      $pdt=Producto::constructAux($precio,$nombre,$cantidad);
-      if($pdt!=null)
-      {
-        $pdt->crearProducto();
-
-        $payload = json_encode(array("mensaje" => "Producto creado con exito"));
-      }
-      else
-      {
-        $payload = json_encode(array("mensaje" => "Producto no se pudo crear"));
-      }
-
-      $response->getBody()->write($payload);
-      return $response
-        ->withHeader('Content-Type', 'application/json');
-    }
-
+ 
     public function TraerTodos($request, $response, $args)
     {
       $lista = Producto::obtenerTodos();
@@ -45,19 +21,6 @@ class ProductsController extends Producto implements IApiUsable
       return $response
         ->withHeader('Content-Type', 'application/json');
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public function TraerUno($request, $response, $args)

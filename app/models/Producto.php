@@ -66,7 +66,7 @@
         {
             $objAccesoDato = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDato->prepararConsulta("UPDATE productos SET baja = :baja WHERE codPedido = :codPedido");
-            $fecha = date("Y-m-d");
+            $fecha = date("Y-m-d H:i:s");
             $consulta->bindValue(':codPedido', $ped, PDO::PARAM_INT);
             $consulta->bindValue(':baja',$fecha);
             $consulta->execute();

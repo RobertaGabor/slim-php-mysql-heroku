@@ -19,7 +19,7 @@ class Cliente
 		if($cantidad>0)
 		{
             $lista=Mesa::obtenerTodos();
-            if (($aux=Cliente::obtenerMesa($lista,$capacidad))!=null&&Usuario::verificarMozo($mozo)==True)
+            if (($aux=Mesa::obtenerMesaLibre($lista,$capacidad))!=null&&Usuario::verificarMozo($mozo)==True)
             {
                 $instance= new self();
                 $instance->responsable=$responsable;
@@ -83,7 +83,7 @@ class Cliente
     //actualizo modificacion
     public function modificarCliente()
     {
-        $egreso=date("Y-m-d"); 
+        $egreso=date("Y-m-d H:i:s"); 
 
         $objAccesoDato = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDato->prepararConsulta("UPDATE clientes SET idMozo=:idMozo,responsable=:responsable, cantidad=:cantidad, modificacion=:modificacion  WHERE id = :id");
@@ -100,7 +100,7 @@ class Cliente
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDato->prepararConsulta("UPDATE clientes SET baja = :baja WHERE id = :id");
-        $fecha = date("Y-m-d");
+        $fecha = date("Y-m-d H:i:s");
         $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
         $consulta->bindValue(':baja',$fecha);
         $consulta->execute();

@@ -3,9 +3,9 @@ include_once "Producto.php";
 class pedido
 {
     private $id;
-    public $estado;
+    public $estado; //este modifica el mozo CON MODIFICAER
     public $codigo;
-    public $precioTotal;
+    public $precioTotal; //estos dos se modifrican soloo cuando modifico el producto
     public $tiempoEstimadoTotal;
     public $idCliente;
 
@@ -65,6 +65,33 @@ class pedido
         return null;
     }
 
+    
+    public static function traerPedido($idPedido)
+    {
+        $lista=Pedido::obtenerTodos();
+        for($i=0;$i<count($lista);$i++)
+        {
+            if($lista[i]->id==$idPedido)
+            {
+                return $lista[i];
+            }
+        }
+        return null;
+    }
+
+    public static function traerPedidoPorCodigo($codPedido)
+    {
+        $lista=Pedido::obtenerTodos();
+        for($i=0;$i<count($lista);$i++)
+        {
+            if($lista[i]->codigo==$codPedido)
+            {
+                return $lista[i];
+            }
+        }
+        return null;
+    }
+
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
@@ -93,21 +120,65 @@ class pedido
     public static function borrarPedidoPorCliente($idCliente)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE pedidos SET baja = :baja WHERE id = :id");
-        $fecha = date("Y-m-d");
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE pedidos SET baja = :baja WHERE idCliente = :id");
+        $fecha = date("Y-m-d H:i:s");
         $consulta->bindValue(':id', $idCliente, PDO::PARAM_INT);
         $consulta->bindValue(':baja',$fecha);
         $consulta->execute();
         //llamo a borrar pedido(ESTE BORRA PRODUCTOS) 
-        if(($ux=Pedido::traerPedidoPorCliente($idCliente))!=null)
+        if(($ux=Pedido::traerPedidoPorCliente($idCliente))!=null) //esto se podria hacer afuera PRIMERO
         {
-            $idPedido=$ux->getID();
+            $idPedido=$ux->codigo;
+            Producto::borrarProductoPorPedido($idPedido);
+        }
+        
+    }
+
+    public static function borrarPedido($idPedido)
+    {
+        $objAccesoDato = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE pedidos SET baja = :baja WHERE codigo = :id");
+        $fecha = date("Y-m-d H:i:s");
+        $consulta->bindValue(':id', $idPedido, PDO::PARAM_INT);
+        $consulta->bindValue(':baja',$fecha);
+        $consulta->execute();
+        //llamo a borrar pedido(ESTE BORRA PRODUCTOS) 
+        if(($ux=Pedido::traerPedido($idPedido))!=null) //esto se podria hacer afuera PRIMERO
+        {
             Producto::borrarProductoPorPedido($idPedido);
         }
         
     }
 
 
+    public function calcularTotal()
+    {
+        $lista=Producto::obtenerTodos();
+        $total=0;
+        for($i=0;$i<count($lista);$i++)
+        {
+            if($lista[i]->codPedido==$this.id)
+            {
+                $total+=$lista[i]->precio*$lista[i]->cantidad;
+            }
+        }
+
+        return $total;
+    }
+
+
+    //QUE MODIF SOLOC AMBIE MODIFICACION Y LO USE CADA VEZ QUE SE CAMBIA ALGO $fecha = date("Y-m-d H:i:s");
+    public function modificarPedido()
+    {
+        $egreso=date("Y-m-d H:i:s"); 
+
+        $objAccesoDato = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE pedidos SET estado=:estado, modificacion=:modificacion WHERE codigo = :codigo");
+        $consulta->bindValue(':codigo', $this->codigo, PDO::PARAM_INT);
+        $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
+        $consulta->bindValue(':modificacion',$egreso , PDO::PARAM_STR);
+        $consulta->execute();
+    }
 
 }
 

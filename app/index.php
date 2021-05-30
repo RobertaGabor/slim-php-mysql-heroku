@@ -73,14 +73,14 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
   //pedidos
   $app->group('/pedidos', function (RouteCollectorProxy $group) {
       $group->post('/{idCliente}', \ProductoController::class . ':CargarUno'); //AQUI ARMA PEDIDO y conc ada cargar genera nuevo producto EN LA ABSE
-      
-      $group->post('/borrar', \MesaController::class . ':BorrarUno'); //AQUI SI BORRO ELIMINO LOS PRODUCTOS
-    
-      $group->post('/modificar', \MesaController::class . ':ModificarUno');//AQUI depende que modifico productos
+                                                                                //MODIFICO PRECIO TOTAL DEL PEDIDO
+      $group->post('/borrar', \PedidoController::class . ':BorrarUno'); //AQUI SI BORRO ELIMINO LOS PRODUCTOS
+          
+      $group->post('/modificar', \PedidoController::class . ':ModificarUno');//AQUI depende que modifico productos ,estado nomas
   
-      $group->get('[/]', \MesaController::class . ':TraerTodos'); //AQUI
+      $group->get('[/]', \PedidoController::class . ':TraerTodos'); //AQUI
     
-      $group->get('/{nroPedido}', \MesaController::class . ':TraerUno'); //AQUI
+      $group->get('/{nroPedido}', \PedidoController::class . ':TraerUno'); //AQUI
   });
 
 
@@ -90,14 +90,14 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
     
     $group->get('/{codigo}', \ProductoController::class . ':TraerUno'); //AQUI
        
-    $group->post('/borrar', \ProductoController::class . ':BorrarUno'); //AQUI SI BORRO MODIFICO PEDIDO
+    $group->post('/borrar', \ProductoController::class . ':BorrarUno'); //AQUI SI BORRO MODIFICO PEDIDO MODIFICO TOTAL DE RPECIO
     
     $group->post('/modificar', \ProductoController::class . ':ModificarUno');//AQUI SI MODIFICO UN PRODUCTO QUE ME MODIFIQUE PEDIDO
-  });
+  });                                                                         //MODIFICO TOTAL DE RPECIO, SI MODIFICO LLAMO AMODIFICAR MOFDIFC PEDIDO
 
 
 
-
+//cuando SE TOME EL PEDIDO Y CADA PRODUCTO TENGA TIEMPO ESTIMADO, MODIFICO TIEMPO ESTIMADO TOTAL
 
 $app->get('[/]', function (Request $request, Response $response) {    
     $response->getBody()->write("LA COMANDA SUPERSTAR");

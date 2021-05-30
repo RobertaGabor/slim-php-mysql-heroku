@@ -26,10 +26,13 @@ class Atenciones
     {
 
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO clientes (idCliente, idMesa, idPedido) VALUES (:idCliente, :idMesa, :idPedido)");
+        $fecha = date("Y-m-d H:i:s");
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO atencion (idCliente, idMesa, idPedido, entrada, salida) VALUES (:idCliente, :idMesa, :idPedido,:entrada,:salida)");
         $consulta->bindValue(':idCliente', $this->idCliente, PDO::PARAM_INT);
         $consulta->bindValue(':idPedido', $this->idPedido, PDO::PARAM_INT);
         $consulta->bindValue(':idMesa', $this->idMesa, PDO::PARAM_INT);
+        $consulta->bindValue(':entrada',$fecha, PDO::PARAM_STR);
+        $consulta->bindValue(':salida', null, PDO::PARAM_STR);
         $consulta->execute();
 
         return $objAccesoDatos->obtenerUltimoId();
@@ -42,14 +45,40 @@ class Atenciones
         $objAccesoDato = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDato->prepararConsulta("UPDATE atencion SET egreso = :egreso WHERE idCliente = :idCliente");
         $fecha = date("Y-m-d H:i:s");
-        $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
+        $consulta->bindValue(':idCliente', $idCliente, PDO::PARAM_INT);
         $consulta->bindValue(':egreso',$fecha);
         $consulta->execute();
         //llamo a borrar pedido(ESTE BORRA PRODUCTOS) y borrar atencion(egreso)
 
     }
+
+    public static function obtenerTodos()
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT  id, idCliente, idMesa, idPedido, entrada, salida FROM atencion");
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Atencion');
+    }
+
+    //devovler atencion con id de clietne
+    public static function traerAtencionPorCliente($idCliente)
+    {
+        $lista=Atencion::obtenerTodos();
+        for($i=0;$i<count($lista);$i++)
+        {
+            if($lista[i]->idCliente==$idCliente)
+            {
+                return $lista[i];
+                
+            }
+
+        }
+
+        return null;
+    }
 }
 
-
+ 
 
 ?>
