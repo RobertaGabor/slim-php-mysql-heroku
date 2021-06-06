@@ -56,6 +56,11 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
     $group->post('/modificar', \MesaController::class . ':ModificarUno');//AQUI
   });
 
+
+
+
+
+  
   //clientes
   $app->group('/clientes', function (RouteCollectorProxy $group) {
     $group->get('[/]', \ClienteController::class . ':TraerTodos'); //AQUI
@@ -94,7 +99,7 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
     
     $group->post('/modificar', \ProductoController::class . ':ModificarUno');//AQUI SI MODIFICO UN PRODUCTO QUE ME MODIFIQUE PEDIDO
   });                                                                         //MODIFICO TOTAL DE RPECIO, SI MODIFICO LLAMO AMODIFICAR MOFDIFC PEDIDO
-
+                                                                              //modificar puede ser cuando unc hef toma el producto
 
 
 //cuando SE TOME EL PEDIDO Y CADA PRODUCTO TENGA TIEMPO ESTIMADO, MODIFICO TIEMPO ESTIMADO TOTAL

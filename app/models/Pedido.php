@@ -52,44 +52,50 @@ class pedido
         return False;
     }
 
-    public static function traerPedidoPorCliente($idCliente)
+    // public static function traerPedidoPorCliente($idCliente)
+    // {
+    //     $lista=Pedido::obtenerTodos();
+    //     for($i=0;$i<count($lista);$i++)
+    //     {
+    //         if($lista[i]->idCliente==$idCliente)
+    //         {
+    //             return $lista[i];
+    //         }
+    //     }
+    //     return null;
+    // }
+    public static function traerPedidoPorCliente($clienteCod)
     {
-        $lista=Pedido::obtenerTodos();
-        for($i=0;$i<count($lista);$i++)
-        {
-            if($lista[i]->idCliente==$idCliente)
-            {
-                return $lista[i];
-            }
-        }
-        return null;
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, codigo, estado, tiempoEstimadoTotal, precioTotal, baja, modificacion FROM pedidos WHERE idCliente = :id");
+        $consulta->bindValue(':id', $clienteCod, PDO::PARAM_INT);
+        $consulta->execute();
+
+        return $consulta->fetchObject('Pedido');
     }
+    
+    // public static function traerPedido($idPedido)
+    // {
+    //     $lista=Pedido::obtenerTodos();
+    //     for($i=0;$i<count($lista);$i++)
+    //     {
+    //         if($lista[i]->id==$idPedido)
+    //         {
+    //             return $lista[i];
+    //         }
+    //     }
+    //     return null;
+    // }
 
     
-    public static function traerPedido($idPedido)
+    public static function traerPedidoPorCodigo($pedidoCod)
     {
-        $lista=Pedido::obtenerTodos();
-        for($i=0;$i<count($lista);$i++)
-        {
-            if($lista[i]->id==$idPedido)
-            {
-                return $lista[i];
-            }
-        }
-        return null;
-    }
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, codigo, estado, tiempoEstimadoTotal, precioTotal, baja, modificacion FROM pedidos WHERE codigo = :id");
+        $consulta->bindValue(':id', $pedidoCod, PDO::PARAM_INT);
+        $consulta->execute();
 
-    public static function traerPedidoPorCodigo($codPedido)
-    {
-        $lista=Pedido::obtenerTodos();
-        for($i=0;$i<count($lista);$i++)
-        {
-            if($lista[i]->codigo==$codPedido)
-            {
-                return $lista[i];
-            }
-        }
-        return null;
+        return $consulta->fetchObject('Pedido');
     }
 
     public static function obtenerTodos()

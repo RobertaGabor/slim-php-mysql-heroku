@@ -26,9 +26,9 @@ class ProductsController extends Producto implements IApiUsable
     public function TraerUno($request, $response, $args)
     {
         // Buscamos usuario por nombre
-        $usr = $args['usuario'];
-        $usuario = Usuario::obtenerUsuario($usr);
-        $payload = json_encode($usuario);
+        $usr = $args['idProducto'];
+        $producto = Producto::obtenerProducto($usr);
+        $payload = json_encode($producto);
 
         $response->getBody()->write($payload);
         return $response
@@ -54,10 +54,11 @@ class ProductsController extends Producto implements IApiUsable
     {
         $parametros = $request->getParsedBody();
 
-        $usuarioId = $parametros['usuarioId'];
-        Usuario::borrarUsuario($usuarioId);
+        $id = $parametros['idProducto'];
+        Producto::borrarProducto($id);
+        //eliminar el total en el pedido. el precio x cant del pedido y modifico el tiempo estimado al proximo mas alto
 
-        $payload = json_encode(array("mensaje" => "Usuario borrado con exito"));
+        $payload = json_encode(array("mensaje" => "Producto borrado con exito"));
 
         $response->getBody()->write($payload);
         return $response
