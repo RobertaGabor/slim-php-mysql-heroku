@@ -75,31 +75,31 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
 
   }); 
 
-  //pedidos
-  $app->group('/pedidos', function (RouteCollectorProxy $group) {
-      $group->post('/{idCliente}', \ProductoController::class . ':CargarUno'); //AQUI ARMA PEDIDO y conc ada cargar genera nuevo producto EN LA ABSE
-                                                                                //MODIFICO PRECIO TOTAL DEL PEDIDO
-      $group->post('/borrar', \PedidoController::class . ':BorrarUno'); //AQUI SI BORRO ELIMINO LOS PRODUCTOS
+  // //pedidos
+  // $app->group('/pedidos', function (RouteCollectorProxy $group) {
+  //     $group->post('/{idCliente}', \ProductoController::class . ':CargarUno'); //AQUI ARMA PEDIDO y conc ada cargar genera nuevo producto EN LA ABSE
+  //                                                                               //MODIFICO PRECIO TOTAL DEL PEDIDO
+  //     $group->post('/borrar', \PedidoController::class . ':BorrarUno'); //AQUI SI BORRO ELIMINO LOS PRODUCTOS
           
-      $group->post('/modificar', \PedidoController::class . ':ModificarUno');//AQUI depende que modifico productos ,estado nomas
+  //     $group->post('/modificar', \PedidoController::class . ':ModificarUno');//AQUI depende que modifico productos ,estado nomas
   
-      $group->get('[/]', \PedidoController::class . ':TraerTodos'); //AQUI
+  //     $group->get('[/]', \PedidoController::class . ':TraerTodos'); //AQUI
     
-      $group->get('/{nroPedido}', \PedidoController::class . ':TraerUno'); //AQUI
-  });
+  //     $group->get('/{nroPedido}', \PedidoController::class . ':TraerUno'); //AQUI
+  // });
 
 
-  //productos
-  $app->group('/productos', function (RouteCollectorProxy $group) {
-    $group->get('[/]', \ProductoController::class . ':TraerTodos'); //AQUI
+  // //productos
+  // $app->group('/productos', function (RouteCollectorProxy $group) {
+  //   $group->get('[/]', \ProductoController::class . ':TraerTodos'); //AQUI
     
-    $group->get('/{codigo}', \ProductoController::class . ':TraerUno'); //AQUI
+  //   $group->get('/{codigo}', \ProductoController::class . ':TraerUno'); //AQUI
        
-    $group->post('/borrar', \ProductoController::class . ':BorrarUno'); //AQUI SI BORRO MODIFICO PEDIDO MODIFICO TOTAL DE RPECIO
+  //   $group->post('/borrar', \ProductoController::class . ':BorrarUno'); //AQUI SI BORRO MODIFICO PEDIDO MODIFICO TOTAL DE RPECIO
     
-    $group->post('/modificar', \ProductoController::class . ':ModificarUno');//AQUI SI MODIFICO UN PRODUCTO QUE ME MODIFIQUE PEDIDO
-  });                                                                         //MODIFICO TOTAL DE RPECIO, SI MODIFICO LLAMO AMODIFICAR MOFDIFC PEDIDO
-                                                                              //modificar puede ser cuando unc hef toma el producto
+  //   $group->post('/modificar', \ProductoController::class . ':ModificarUno');//AQUI SI MODIFICO UN PRODUCTO QUE ME MODIFIQUE PEDIDO
+  // });                                                                         //MODIFICO TOTAL DE RPECIO, SI MODIFICO LLAMO AMODIFICAR MOFDIFC PEDIDO
+  //                                                                             //modificar puede ser cuando unc hef toma el producto
 
 
 //cuando SE TOME EL PEDIDO Y CADA PRODUCTO TENGA TIEMPO ESTIMADO, MODIFICO TIEMPO ESTIMADO TOTAL

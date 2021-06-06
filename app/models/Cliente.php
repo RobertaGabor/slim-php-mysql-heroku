@@ -63,7 +63,7 @@ class Cliente
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, responsable, cantidad, codMesa, idMozo, modificacion FROM clientes");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, responsable, cantidad, codMesa, idMozo, baja, modificacion FROM clientes");
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Cliente');
@@ -106,5 +106,5 @@ class Cliente
         $consulta->execute();
         //llamo a borrar pedido(ESTE BORRA PRODUCTOS) y borrar atencion(egreso)
 
-    }
+    } 
 }
