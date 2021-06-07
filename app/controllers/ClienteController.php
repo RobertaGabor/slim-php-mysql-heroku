@@ -105,8 +105,17 @@ class ClienteController extends Cliente implements IApiUsable
     public function BorrarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
+        $usuarioId = $parametros['id']; 
 
-        $usuarioId = $parametros['id'];     
+        $cliente=Cliente::TraerUno()obtenerCliente($usuarioID);
+
+        $aux=Mesa::obtenerMesa($cliente->codMesa);
+        $aux->estado="lista para cerrar"; //la cierra un socio
+        $aux->ModificarMesa();
+
+
+
+            
         Cliente::borrarCliente($usuarioId);
         Pedido::borrarPedidoPorCliente($usuarioId);
         Atencion::borrarAtencion($usuarioId);
@@ -114,9 +123,7 @@ class ClienteController extends Cliente implements IApiUsable
         //liberar mesa hacer funcion que llame a modificar pero tome todos los datos y cambie solo estado a lista para cerrar
         //traer ese cliente, buscar su mesa, y a ese codigo cambiarle el estado
 
-        $aux=Cliente::obtenerCliente($usuarioId);
-        $aux->estado="lista para cerrar"; //la cierra un socio
-        $aux->ModificarMesa();
+
 
         $payload = json_encode(array("mensaje" => "Usuario borrado con exito"));
 
