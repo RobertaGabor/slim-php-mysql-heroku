@@ -42,7 +42,7 @@ class Atencion
     public static function borrarAtencion($idCliente)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE atencion SET egreso = :egreso WHERE idCliente = :idCliente");
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE atencion SET salida = :egreso WHERE idCliente = :idCliente");
         $fecha = date("Y-m-d H:i:s");
         $consulta->bindValue(':idCliente', $idCliente, PDO::PARAM_INT);
         $consulta->bindValue(':egreso',$fecha);
