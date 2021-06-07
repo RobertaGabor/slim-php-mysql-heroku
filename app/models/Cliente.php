@@ -27,6 +27,7 @@ class Cliente
                     if($lista[i]->capacidad>=$cantidad&&lista[i]->estado=="cerrada")
                     {
                         $aux=$lista[i];
+                        break;
                     }
                 }
 
