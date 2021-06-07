@@ -69,6 +69,7 @@ class Usuario extends Sector
 
         for($i=0;$i<count($lista);$i++)
         {
+            echo $lista[i]->id;
             if($lista[i]->id==$id&&$lista[i]->tipo=="mozo")
             {
                 return True;
