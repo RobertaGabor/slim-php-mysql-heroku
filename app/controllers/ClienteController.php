@@ -37,7 +37,7 @@ class ClienteController extends Cliente implements IApiUsable
       }
       else
       {
-        $payload = json_encode(array("mensaje" => "Cliente no se pudo crear"+$cliente->codMesa));
+        $payload = json_encode(array("mensaje" => "Cliente no se pudo crear"));
       }
 
       $response->getBody()->write($payload);

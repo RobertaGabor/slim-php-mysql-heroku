@@ -32,8 +32,6 @@ class Mesa
         $consulta->execute();
 
         return $consulta->fetchObject('Mesa');
-
-        return null;
     }
 
     public function getID($id)
