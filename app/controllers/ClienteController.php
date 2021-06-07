@@ -12,7 +12,7 @@ class ClienteController extends Cliente implements IApiUsable
       $idMozo = $parametros['idMozo'];
 
       $cliente=Cliente::constructAux($cantidad,$nombre,$idMozo);
-      var_dump($cliente);
+
       if($cliente!=null)
       {
         $idCliente=$cliente->crearCliente();

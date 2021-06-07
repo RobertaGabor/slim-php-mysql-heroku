@@ -30,8 +30,8 @@ class Cliente
                     {
                         if($lista[$i]->capacidad>=$cantidad&&(strcmp($lista[$i]->estado,"cerrada"))==0)
                         {
+                            echo "aca";
                             $aux=$lista[$i];
-                            var_dump($aux);
                             break;
                         }
                     }
