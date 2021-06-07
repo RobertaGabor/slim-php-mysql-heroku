@@ -16,7 +16,7 @@ class pedido
         {
             $aux=Pedido::generateRandomCode();
 
-        }while(corroborarCodes($aux)==True);
+        }while(Pedido::corroborarCodes($aux)==True);
         
         $instance= new self();
         $instance->estado="sin pedir";
