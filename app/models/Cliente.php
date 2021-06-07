@@ -21,6 +21,7 @@ class Cliente
             $lista=null;
             $aux=null;
             $lista=Mesa::obtenerMesasLibres();
+            echo count($lista);
             if (count($lista)>0)
             {
                 console.log("entro");
@@ -51,7 +52,6 @@ class Cliente
                 }
 
             }
-            console.log("dsd");
 			
 		}
 
