@@ -30,7 +30,7 @@ class ClienteController extends Cliente implements IApiUsable
           $mesa=Mesa::obtenerMesa($cliente->codMesa);
           $idMesa=$mesa->getID();
           $att=Atencion::constructAux($idCliente,$idMesa,$idPedido);
-          Atencion::crearAtencion($att);
+          $att->crearAtencion();
           echo "Atencion creada";
 
           //despues cuando agrego productos al pedido que devuelva el id del pedido
