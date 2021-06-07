@@ -24,16 +24,14 @@ class Mesa
     }
 
 
-    public static function obtenerMesaLibre($mesas,$capacidad)
+    public static function obtenerMesasLibres($mesas,$capacidad)
     {
-        for ($i=0;$i<count($mesas);$i++)
-        {
-            
-            if((strcmp($mesas[i]->estado,"cerrado")!=0)&&$mesas[i]->baja==null&&$mesas[i]->capacidad>=$capacidad)
-            {
-                return $mesas[i];
-            }
-        }
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, codigo, estado, capacidad, baja, modificacion FROM mesas WHERE baja = :baja");
+        $consulta->bindValue(':baja', null, PDO::PARAM_INT);
+        $consulta->execute();
+
+        return $consulta->fetchObject('Mesa');
 
         return null;
     }

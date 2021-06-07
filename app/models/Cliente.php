@@ -18,18 +18,30 @@ class Cliente
 	{
 		if($cantidad>0)
 		{
-            $lista=Mesa::obtenerTodas();
-            if (($aux=Mesa::obtenerMesaLibre($lista,$cantidad))!=null&&Usuario::verificarMozo($mozo)==True)
+            $aux=null;
+            if (($lista=Mesa::obtenerMesasLibres($lista,$cantidad))!=null&&Usuario::verificarMozo($mozo)==True)
             {
-                $instance= new self();
-                $instance->responsable=$responsable;
-                $instance->cantidad=$cantidad;
-                $instance->idMozo=$mozo;
-                $instance->codMesa=$aux->codigo;
+                for($i=0;i<count($lista);$i++)
+                {
+                    if($lista[i]->capacidad>=$cantidad&&lista[i]->estado=="cerrada")
+                    {
+                        $aux=$lista[i];
+                    }
+                }
 
-                $aux->estado="recien ingresados";
-                $aux->cambiarEstadoMesa();
-                return $instance;                
+                if($aux!=null)
+                {
+                    $instance= new self();
+                    $instance->responsable=$responsable;
+                    $instance->cantidad=$cantidad;
+                    $instance->idMozo=$mozo;
+                    $instance->codMesa=$aux->codigo;
+
+                    $aux->estado="recien ingresados";
+                    $aux->cambiarEstadoMesa();
+                    return $instance;                                    
+                }
+
             }
 
 			
