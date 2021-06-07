@@ -27,7 +27,7 @@ class Mesa
     public static function obtenerMesasLibres()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, codigo, estado, capacidad, baja, modificacion FROM mesas WHERE baja != :baja");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, codigo, estado, capacidad, baja, modificacion FROM mesas WHERE baja = :baja");
         $consulta->bindValue(':baja', null, PDO::PARAM_INT);
         $consulta->execute();
 
