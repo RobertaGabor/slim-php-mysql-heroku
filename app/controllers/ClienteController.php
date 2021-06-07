@@ -17,6 +17,7 @@ class ClienteController extends Cliente implements IApiUsable
       {
 
         $idCliente=$cliente->crearCliente();
+        echo "Cliente creado";
         //genero pedido al usar CrearPedido devuelve id y lo  pongo en el atributo
         $pedido=Pedido::constructAux($idCliente);
         if($pedido!=null)
@@ -27,6 +28,7 @@ class ClienteController extends Cliente implements IApiUsable
           //genero atencion
           //pido mesa
           $mesa=Mesa::obtenerMesa($cliente->codMesa);
+          var_dump($mesa);
           $idMesa=$mesa->getID();
           $att=Atencion::constructAux($idCliente,$idMesa,$idPedido);
           Atencion::crearAtencion($att);
