@@ -15,6 +15,7 @@ class ClienteController extends Cliente implements IApiUsable
 
       if($cliente!=null)
       {
+        var_dump($cliente);
         $idCliente=$cliente->crearCliente();
         //genero pedido al usar CrearPedido devuelve id y lo  pongo en el atributo
         $pedido=Pedido::constructAux($idcliente);

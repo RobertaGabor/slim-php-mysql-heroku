@@ -24,23 +24,19 @@ class Cliente
          
             if (count($lista)>0)
             {
-                echo "hay mesas";
                 if(Usuario::verificarMozo($mozo)==True)
                 {
-                    echo "hay mozo";
                     for($i=0;$i<count($lista);$i++)
                     {
                         if($lista[$i]->capacidad>=$cantidad&&(strcmp($lista[$i]->estado,"cerrada"))==0)
                         {
                             $aux=$lista[$i];
-                            var_dump($aux);
                             break;
                         }
                     }
-                    echo "salio del for";
+
                     if($aux!=null)
                     {
-                        echo "mesa elegida";
                         $instance= new self();
                         $instance->responsable=$responsable;
                         $instance->cantidad=$cantidad;
