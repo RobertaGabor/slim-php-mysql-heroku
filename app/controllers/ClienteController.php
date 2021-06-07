@@ -12,7 +12,6 @@ class ClienteController extends Cliente implements IApiUsable
       $idMozo = $parametros['idMozo'];
 
       $cliente=Cliente::constructAux($cantidad,$nombre,$idMozo);
-      console.log($cliente->codMesa);
       if($cliente!=null)
       {
         $idCliente=$cliente->crearCliente();
@@ -38,7 +37,7 @@ class ClienteController extends Cliente implements IApiUsable
       }
       else
       {
-        $payload = json_encode(array("mensaje" => "Cliente no se pudo crear"));
+        $payload = json_encode(array("mensaje" => "Cliente no se pudo crear"+$cliente->codMesa));
       }
 
       $response->getBody()->write($payload);
