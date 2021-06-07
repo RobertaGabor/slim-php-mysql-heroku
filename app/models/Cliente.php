@@ -24,7 +24,6 @@ class Cliente
             echo count($lista);
             if (count($lista)>0)
             {
-                console.log("entro");
                 if(Usuario::verificarMozo($mozo)==True)
                 {
                     console.log("entro");
