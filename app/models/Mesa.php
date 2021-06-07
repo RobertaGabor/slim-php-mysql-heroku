@@ -71,7 +71,7 @@ class Mesa
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("SELECT id, codigo, estado, capacidad, baja FROM mesas WHERE codigo = :codigo");
-        $consulta->bindValue(':codigo', $usuario, PDO::PARAM_INT);
+        $consulta->bindValue(':codigo', $usuario, PDO::PARAM_STR);
         $consulta->execute();
 
         return $consulta->fetchObject('Mesa');
