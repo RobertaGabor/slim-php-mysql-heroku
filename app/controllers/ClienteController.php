@@ -1,5 +1,5 @@
 <?php
-include_once "Cliente.php";
+include_once "./models/Cliente.php";
 require_once './interfaces/IApiUsable.php';
 
 class ClienteController extends Cliente implements IApiUsable
