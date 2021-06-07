@@ -26,12 +26,11 @@ class Cliente
             {
                 if(Usuario::verificarMozo($mozo)==True)
                 {
-                    echo("entro");
-                    for($i=0;i<count($lista);$i++)
+                    for($i=0;$i<count($lista);$i++)
                     {
-                        if($lista[i]->capacidad>=$cantidad&&$lista[i]->estado=="cerrada")
+                        if($lista[$i]->capacidad>=$cantidad&&(strcmp($lista[$i]->estado=="cerrada")==0)
                         {
-                            $aux=$lista[i];
+                            $aux=$lista[$i];
                             break;
                         }
                     }
@@ -46,6 +45,7 @@ class Cliente
     
                         $aux->estado="recien ingresados";
                         $aux->cambiarEstadoMesa();
+                        echo "llego hasta aca";
                         return $instance;                                    
                     }
                 }
