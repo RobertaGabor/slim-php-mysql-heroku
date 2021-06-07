@@ -34,7 +34,7 @@ class Mesa
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Mesa');
     }
 
-    public function getID($id)
+    public function getID()
     {
         return $this->id;
     }
