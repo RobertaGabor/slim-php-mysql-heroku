@@ -18,8 +18,9 @@ class Cliente
 	{
 		if($cantidad>0)
 		{
+            $lista=null;
             $aux=null;
-            if (($lista=Mesa::obtenerMesasLibres($lista,$cantidad))!=null&&Usuario::verificarMozo($mozo)==True)
+            if (($lista=Mesa::obtenerMesasLibres())!=null&&Usuario::verificarMozo($mozo)==True)
             {
                 for($i=0;i<count($lista);$i++)
                 {

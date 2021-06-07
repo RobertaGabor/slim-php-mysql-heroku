@@ -24,7 +24,7 @@ class Mesa
     }
 
 
-    public static function obtenerMesasLibres($mesas,$capacidad)
+    public static function obtenerMesasLibres()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("SELECT id, codigo, estado, capacidad, baja, modificacion FROM mesas WHERE baja = :baja");
