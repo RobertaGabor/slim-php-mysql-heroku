@@ -15,6 +15,7 @@ require_once './db/AccesoDatos.php';
 
 require_once './controllers/UsuarioController.php';
 require_once './controllers/MesaController.php';
+require_once './controllers/ClienteController.php';
 
 
 $app = AppFactory::create();
