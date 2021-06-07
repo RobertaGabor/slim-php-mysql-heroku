@@ -28,7 +28,7 @@ class Cliente
                 {
                     for($i=0;$i<count($lista);$i++)
                     {
-                        if($lista[$i]->capacidad>=$cantidad&&(strcmp($lista[$i]->estado=="cerrada")==0)
+                        if($lista[$i]->capacidad>=$cantidad&&(strcmp($lista[$i]->estado=="cerrada"))==0)
                         {
                             $aux=$lista[$i];
                             break;
