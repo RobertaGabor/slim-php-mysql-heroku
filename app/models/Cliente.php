@@ -22,6 +22,7 @@ class Cliente
             $aux=null;
             if (($lista=Mesa::obtenerMesasLibres())!=null&&Usuario::verificarMozo($mozo)==True)
             {
+                console.log("entro");
                 for($i=0;i<count($lista);$i++)
                 {
                     if($lista[i]->capacidad>=$cantidad&&$lista[i]->estado=="cerrada")
@@ -45,6 +46,7 @@ class Cliente
                 }
 
             }
+            console.log("no entro");
 
 			
 		}
