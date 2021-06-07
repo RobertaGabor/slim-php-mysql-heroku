@@ -73,7 +73,7 @@ class ClienteController extends Cliente implements IApiUsable
     {
         // Buscamos usuario por nombre
         $usr = $args['id']; //lo pone en el enlace directo poreso no es request es args
-        $usuario = Cliente::obtenerUsuario($usr);
+        $usuario = Cliente::obtenerCliente($usr);
         $payload = json_encode($usuario);
 
         $response->getBody()->write($payload);
