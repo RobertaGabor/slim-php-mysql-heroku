@@ -107,7 +107,7 @@ class ClienteController extends Cliente implements IApiUsable
         $parametros = $request->getParsedBody();
         $usuarioId = $parametros['id']; 
 
-        $cliente=Cliente::TraerUno()obtenerCliente($usuarioID);
+        $cliente=Cliente::obtenerCliente($usuarioId);
 
         $aux=Mesa::obtenerMesa($cliente->codMesa);
         $aux->estado="lista para cerrar"; //la cierra un socio
