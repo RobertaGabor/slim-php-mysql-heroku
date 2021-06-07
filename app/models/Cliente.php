@@ -43,7 +43,6 @@ class Cliente
                         $instance->cantidad=$cantidad;
                         $instance->idMozo=$mozo;
                         $instance->codMesa=$aux->codigo;
-                        echo $instance->codMesa;
     
                         $aux->estado="recien ingresados";
                         $aux->cambiarEstadoMesa();
