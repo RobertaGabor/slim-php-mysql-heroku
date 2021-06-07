@@ -66,15 +66,6 @@
             return $consulta->fetchAll(PDO::FETCH_CLASS, 'Producto');
         }
 
-        public static function obtenerTodos()
-        {
-            $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT  id, nombre, precio, cantidad, sectorDePreparacion, idChef, tiempoEstimadoDePreparacion, codPedido, baja, modificacion FROM productos");
-            $consulta->execute();
-    
-            return $consulta->fetchAll(PDO::FETCH_CLASS, 'Producto');
-        }
-
 
         //hacer 2 bajas una por pedido, donde la voy a llamar del controlador de pedido cuando este de de baja
         //otra por id, este va a modificar campos de pedido
