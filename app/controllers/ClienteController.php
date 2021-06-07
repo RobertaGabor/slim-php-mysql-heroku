@@ -28,7 +28,6 @@ class ClienteController extends Cliente implements IApiUsable
           //genero atencion
           //pido mesa
           $mesa=Mesa::obtenerMesa($cliente->codMesa);
-          var_dump($mesa);
           $idMesa=$mesa->getID();
           $att=Atencion::constructAux($idCliente,$idMesa,$idPedido);
           Atencion::crearAtencion($att);

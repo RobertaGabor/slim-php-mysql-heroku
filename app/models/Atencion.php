@@ -1,6 +1,6 @@
 <?php
 
-class Atenciones
+class Atencion
 {
     //para poder traerlas y mostrarlas
     private $id;
