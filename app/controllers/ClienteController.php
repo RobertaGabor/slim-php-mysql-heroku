@@ -38,7 +38,7 @@ class ClienteController extends Cliente implements IApiUsable
         }
         
 
-        $payload = json_encode(array("mensaje" => "Cliente creado con exito ID DE CLIENTE PARA GENERAR PEDIDO: "+$idCliente));
+        $payload = json_encode(array("mensaje" => "Cliente creado con exito ID DE CLIENTE PARA GENERAR PEDIDO: ","ID CLIENTE: " => $idCliente));
       }
       else
       {
