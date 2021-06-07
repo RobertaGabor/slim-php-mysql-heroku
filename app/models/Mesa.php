@@ -29,7 +29,7 @@ class Mesa
         for ($i=0;$i<count($mesas);$i++)
         {
             
-            if((strcmp($mesas[i]->estado,"cerrado")!=0)&&$mesas[i]->baja==null&&$mesas[i]->capacidad==$capacidad)
+            if((strcmp($mesas[i]->estado,"cerrado")!=0)&&$mesas[i]->baja==null&&$mesas[i]->capacidad>=$capacidad)
             {
                 return $mesas[i];
             }
@@ -93,7 +93,7 @@ class Mesa
 
     public function modificarMesa()
     {
-        $egreso=date("Y-m-d"); 
+        $egreso=date("Y-m-d H:i:s"); 
 
         $objAccesoDato = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDato->prepararConsulta("UPDATE mesas SET estado = :estado, capacidad= :capacidad, modificacion=:modificacion  WHERE codigo = :codigo");
@@ -105,17 +105,17 @@ class Mesa
     }
 
 
-    // public function cambiarEstadoMesa()
-    // {
-    //     $egreso=date("Y-m-d"); 
+    public function cambiarEstadoMesa()
+    {
+        $egreso=date("Y-m-d H:i:s"); 
 
-    //     $objAccesoDato = AccesoDatos::obtenerInstancia();
-    //     $consulta = $objAccesoDato->prepararConsulta("UPDATE mesas SET estado = :estado, modificacion=:modificacion  WHERE codigo = :codigo");
-    //     $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
-    //     $consulta->bindValue(':codigo', $this->codigo, PDO::PARAM_INT);
-    //     $consulta->bindValue(':modificacion',$egreso , PDO::PARAM_STR);
-    //     $consulta->execute();
-    // }
+        $objAccesoDato = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE mesas SET estado = :estado, modificacion=:modificacion  WHERE codigo = :codigo");
+        $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
+        $consulta->bindValue(':codigo', $this->codigo, PDO::PARAM_INT);
+        $consulta->bindValue(':modificacion',$egreso , PDO::PARAM_STR);
+        $consulta->execute();
+    }
 }
 
 

@@ -57,10 +57,6 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
   });
 
 
-
-
-
-  
   //clientes
   $app->group('/clientes', function (RouteCollectorProxy $group) {
     $group->get('[/]', \ClienteController::class . ':TraerTodos'); //AQUI
