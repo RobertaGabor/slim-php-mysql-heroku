@@ -70,7 +70,7 @@ class Cliente
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO clientes (responsable, cantidad, codMesa, idMozo) VALUES (:responsable, :cantidad, :codMesa, :idMozo)");
         $consulta->bindValue(':responsable', $this->responsable, PDO::PARAM_STR);
-        $consulta->bindValue(':codMesa', $this->codMeza, PDO::PARAM_INT);
+        $consulta->bindValue(':codMesa', $this->codMesa, PDO::PARAM_INT);
         $consulta->bindValue(':cantidad', $this->cantidad, PDO::PARAM_INT);
         $consulta->bindValue(':idMozo', $this->idMozo, PDO::PARAM_INT);
         $consulta->execute();
