@@ -51,6 +51,7 @@ class Cliente
                 }
 
             }
+            console.log("dsd");
 			
 		}
 
