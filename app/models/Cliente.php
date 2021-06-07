@@ -31,6 +31,7 @@ class Cliente
                         if($lista[$i]->capacidad>=$cantidad&&(strcmp($lista[$i]->estado,"cerrada"))==0)
                         {
                             $aux=$lista[$i];
+                            var_dump($aux);
                             break;
                         }
                     }
@@ -42,10 +43,10 @@ class Cliente
                         $instance->cantidad=$cantidad;
                         $instance->idMozo=$mozo;
                         $instance->codMesa=$aux->codigo;
+                        echo $instance->codMesa;
     
                         $aux->estado="recien ingresados";
                         $aux->cambiarEstadoMesa();
-                        echo "llego hasta aca";
                         return $instance;                                    
                     }
                 }
