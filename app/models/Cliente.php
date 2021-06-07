@@ -21,7 +21,7 @@ class Cliente
             $lista=null;
             $aux=null;
             $lista=Mesa::obtenerMesasLibres();
-            if ($lista!=null)
+            if (count($lista)>0)
             {
                 console.log("entro");
                 if(Usuario::verificarMozo($mozo)==True)
