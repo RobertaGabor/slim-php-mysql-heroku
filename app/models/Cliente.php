@@ -21,12 +21,12 @@ class Cliente
             $lista=null;
             $aux=null;
             $lista=Mesa::obtenerMesasLibres();
-            echo count($lista);
+         
             if (count($lista)>0)
             {
                 if(Usuario::verificarMozo($mozo)==True)
                 {
-                    console.log("entro");
+                    echo("entro");
                     for($i=0;i<count($lista);$i++)
                     {
                         if($lista[i]->capacidad>=$cantidad&&$lista[i]->estado=="cerrada")
