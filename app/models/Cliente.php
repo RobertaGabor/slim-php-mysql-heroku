@@ -18,7 +18,7 @@ class Cliente
 	{
 		if($cantidad>0)
 		{
-            $lista=Mesa::obtenerTodos();
+            $lista=Mesa::obtenerTodas();
             if (($aux=Mesa::obtenerMesaLibre($lista,$capacidad))!=null&&Usuario::verificarMozo($mozo)==True)
             {
                 $instance= new self();
