@@ -12,15 +12,18 @@ class pedido
 
     public static function constructAux($idCliente)
 	{
-        while(($aux=Pedido::generateRandomCode())==True)
+        do
         {
-            $instance= new self();
-            $instance->estado="sin pedir";
-            $instance->precioTotal=0;
-            $instance->tiempoEstimadoTotal=null;
-            $instance->codigo=$aux;
-            $instance->idCliente=$idCliente;
-        }
+            $aux=Pedido::generateRandomCode();
+
+        }while(corroborarCodes($aux)==True);
+        
+        $instance= new self();
+        $instance->estado="sin pedir";
+        $instance->precioTotal=0;
+        $instance->tiempoEstimadoTotal=0;
+        $instance->codigo=$aux;
+        $instance->idCliente=$idCliente;
 
         return $instance;
 			
@@ -110,14 +113,12 @@ class pedido
     public function crearPedido()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos (codigo, estado, tiempoEstimadoTotal, precioTotal, idCliente, baja, modificacion) VALUES (:codigo, :estado, :tiempoEstimadoTotal, :precioTotal, :idCliente, :baja, :modificacion)");
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos (codigo, estado, tiempoEstimadoTotal, precioTotal, idCliente) VALUES (:codigo, :estado, :tiempoEstimadoTotal, :precioTotal, :idCliente)");
         $consulta->bindValue(':codigo', $this->codigo, PDO::PARAM_STR);
         $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
         $consulta->bindValue(':tiempoEstimadoTotal', $this->tiempoEstimadoTotal, PDO::PARAM_STR);
         $consulta->bindValue(':precioTotal', $this->precioTotal, PDO::PARAM_STR);
         $consulta->bindValue(':idCliente', $this->idCliente, PDO::PARAM_INT);
-        $consulta->bindValue(':baja', null, PDO::PARAM_STR);
-        $consulta->bindValue(':modificacion', null, PDO::PARAM_STR);
         $consulta->execute();
 
         return $objAccesoDatos->obtenerUltimoId();

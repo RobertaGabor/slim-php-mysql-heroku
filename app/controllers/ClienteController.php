@@ -15,20 +15,24 @@ class ClienteController extends Cliente implements IApiUsable
 
       if($cliente!=null)
       {
-        var_dump($cliente);
+
         $idCliente=$cliente->crearCliente();
+        echo $idCliente;
+        echo "Cliente creado"
         //genero pedido al usar CrearPedido devuelve id y lo  pongo en el atributo
         $pedido=Pedido::constructAux($idcliente);
         if($pedido!=null)
         {
           //le seteo el idPedido
           $idPedido=$pedido->crearPedido();
+          echo "Pedido creado"
           //genero atencion
           //pido mesa
           $mesa=Mesa::obtenerMesa($cliente->codMesa);
           $idMesa=$mesa->getID();
           $att=Atencion::constructAux($idcliente,$idMesa,$idPedido);
           Atencion::crearAtencion($att);
+          echo "Atencion creada"
 
           //despues cuando agrego productos al pedido que devuelva el id del pedido
 

@@ -27,12 +27,11 @@ class Atenciones
 
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $fecha = date("Y-m-d H:i:s");
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO atencion (idCliente, idMesa, idPedido, entrada, salida) VALUES (:idCliente, :idMesa, :idPedido,:entrada,:salida)");
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO atencion (idCliente, idMesa, idPedido, entrada) VALUES (:idCliente, :idMesa, :idPedido,:entrada)");
         $consulta->bindValue(':idCliente', $this->idCliente, PDO::PARAM_INT);
         $consulta->bindValue(':idPedido', $this->idPedido, PDO::PARAM_INT);
         $consulta->bindValue(':idMesa', $this->idMesa, PDO::PARAM_INT);
         $consulta->bindValue(':entrada',$fecha, PDO::PARAM_STR);
-        $consulta->bindValue(':salida', null, PDO::PARAM_STR);
         $consulta->execute();
 
         return $objAccesoDatos->obtenerUltimoId();
