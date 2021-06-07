@@ -20,34 +20,37 @@ class Cliente
 		{
             $lista=null;
             $aux=null;
-            if (($lista=Mesa::obtenerMesasLibres())!=null&&Usuario::verificarMozo($mozo)==True)
+            $lista=Mesa::obtenerMesasLibres();
+            if ($lista!=null)
             {
                 console.log("entro");
-                for($i=0;i<count($lista);$i++)
+                if(Usuario::verificarMozo($mozo)==True)
                 {
-                    if($lista[i]->capacidad>=$cantidad&&$lista[i]->estado=="cerrada")
+                    console.log("entro");
+                    for($i=0;i<count($lista);$i++)
                     {
-                        $aux=$lista[i];
-                        break;
+                        if($lista[i]->capacidad>=$cantidad&&$lista[i]->estado=="cerrada")
+                        {
+                            $aux=$lista[i];
+                            break;
+                        }
+                    }
+    
+                    if($aux!=null)
+                    {
+                        $instance= new self();
+                        $instance->responsable=$responsable;
+                        $instance->cantidad=$cantidad;
+                        $instance->idMozo=$mozo;
+                        $instance->codMesa=$aux->codigo;
+    
+                        $aux->estado="recien ingresados";
+                        $aux->cambiarEstadoMesa();
+                        return $instance;                                    
                     }
                 }
 
-                if($aux!=null)
-                {
-                    $instance= new self();
-                    $instance->responsable=$responsable;
-                    $instance->cantidad=$cantidad;
-                    $instance->idMozo=$mozo;
-                    $instance->codMesa=$aux->codigo;
-
-                    $aux->estado="recien ingresados";
-                    $aux->cambiarEstadoMesa();
-                    return $instance;                                    
-                }
-
             }
-            console.log("no entro");
-
 			
 		}
 
